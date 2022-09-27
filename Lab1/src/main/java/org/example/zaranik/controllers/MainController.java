@@ -1,7 +1,7 @@
 package org.example.zaranik.controllers;
 
 import org.example.zaranik.services.ValidatorService;
-import org.example.zaranik.utils.FileUtil;
+import org.example.zaranik.utils.FileReadUtil;
 import org.example.zaranik.services.FolderLetterCounter;
 import org.example.zaranik.views.View;
 
@@ -31,8 +31,8 @@ public class MainController {
 
             view.printResultFilePath(resultFilePath);
 
-            FileUtil fileUtil = new FileUtil();
-            String result = fileUtil.readAll(resultFilePath);
+            FileReadUtil fileReadUtil = new FileReadUtil();
+            String result = fileReadUtil.readAll(resultFilePath);
 
             view.printMessage(result);
         }while(view.nextStep());
