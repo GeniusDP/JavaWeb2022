@@ -1,6 +1,6 @@
 package org.example.zaranik.controllers;
 
-import org.example.zaranik.services.ValidatorService;
+import org.example.zaranik.services.Validator;
 import org.example.zaranik.utils.FileReadUtil;
 import org.example.zaranik.services.FolderLetterCounter;
 import org.example.zaranik.views.View;
@@ -11,18 +11,18 @@ public class MainController {
 
     public static void main(String[] args) throws Exception {
         View view = new View();
-        ValidatorService validatorService = new ValidatorService();
+        Validator validator = new Validator();
 
         do{
             String inputLetter = view.getChar();
-            if (!validatorService.charIsValid(inputLetter)) {
+            if (!validator.charIsValid(inputLetter)) {
                 view.printCharIsNotValidError();
                 continue;
             }
 
             char letter = inputLetter.charAt(0);
             String dirPath = view.getPath();
-            if (!validatorService.dirPathIsValid(dirPath)) {
+            if (!validator.dirPathIsValid(dirPath)) {
                 view.printDirPathIsNotValidError();
                 continue;
             }

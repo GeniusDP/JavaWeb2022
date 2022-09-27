@@ -21,9 +21,11 @@ public final class FolderLetterCounter {
         ExecutorService executorService = Executors.newCachedThreadPool();
 
         String resultFilePath = "src/main/resources/" + UUID.randomUUID() + ".txt";
-        countLettersInFile(file, letter, executorService, new PrintWriter(resultFilePath));
+        PrintWriter printWriter = new PrintWriter( resultFilePath );
+        countLettersInFile(file, letter, executorService, printWriter);
 
         executorService.shutdown();
+        printWriter.close();
         return resultFilePath;
     }
 
