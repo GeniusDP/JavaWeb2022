@@ -5,7 +5,8 @@ import org.example.zaranik.utils.FileReadUtil;
 import org.example.zaranik.services.FolderLetterCounter;
 import org.example.zaranik.views.View;
 
-// /home/zaranik/Рабочий стол/Projects/firstProject/src/main/resources/folder1
+//    /home/zaranik/Рабочий стол/Projects/firstProject/src/main/resources/folder1
+//    C:\Users\Asus\Desktop\lab1
 public class MainController {
 
     public static void main(String[] args) throws Exception {
