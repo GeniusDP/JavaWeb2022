@@ -5,14 +5,13 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Car;
 import org.example.entities.Mark;
-import org.example.repositories.dao.CarDao;
-import org.example.repositories.dao.MarkDao;
+import org.example.repositories.dao.CrudDao;
 
 @RequiredArgsConstructor
 public class CarRepository implements CrudRepository<Car, Long> {
 
-  private final CarDao carDao;
-  private final MarkDao markDao;
+  private final CrudDao<Car, Long> carDao;
+  private final CrudDao<Mark, Long> markDao;
 
   @Override
   public Car insert(Car value) {

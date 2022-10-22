@@ -52,11 +52,6 @@ class CarDaoTest {
   }
 
   @Test
-  void update() {
-
-  }
-
-  @Test
   void findById() {
     Car byId = carDao.findById(21L);
     System.out.println(byId);
@@ -66,7 +61,7 @@ class CarDaoTest {
 
   @Test
   void repositoryFindAll(){
-    CrudRepository<Car, Long> carRepository = new CarRepository((CarDao) carDao, (MarkDao) markDao);
+    CrudRepository<Car, Long> carRepository = new CarRepository(carDao, markDao);
     List<Car> all = carRepository.findAll();
     all.forEach(System.out::println);
   }
