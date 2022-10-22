@@ -13,25 +13,18 @@ import org.example.entities.Mark;
 import org.example.entities.QualityClass;
 import org.example.repositories.dbutils.ConnectionPool;
 
-public class CarDao implements CrudDao<Car, Long> {
-
-  private final ConnectionPool connectionPool;
+public class CarDao extends AbstractCrudDao<Car, Long> {
 
   public CarDao(ConnectionPool connectionPool) {
-    this.connectionPool = connectionPool;
+    super(connectionPool);
   }
 
   @Override
-  public Car insert(Car car) throws SQLException {
-    if (car == null) {
-      throw new IllegalArgumentException("car must not be null");
-    }
+  public Car insertInternal(Car car, Connection connection) throws SQLException {
     String sql = """
           insert into cars(mark_id, quality_class, name, base_price)
           values(?, ?, ?, ?)
         """;
-    Connection connection = connectionPool.getConnection();
-
     PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
     Mark mark = car.getMark();
@@ -72,47 +65,29 @@ public class CarDao implements CrudDao<Car, Long> {
     generatedKeys.close();
 
     statement.close();
-
-    connectionPool.putBack(connection);
     return car;
   }
 
   @Override
-  public int delete(Long key) throws SQLException {
-    if (key == null) {
-      throw new IllegalArgumentException("key must not be null");
-    }
+  public int deleteInternal(Long key, Connection connection) throws SQLException {
     String sql = "delete from cars where id = ?;";
-    Connection connection = connectionPool.getConnection();
-
     int rowsUpdated = 0;
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setLong(1, key);
       rowsUpdated = statement.executeUpdate();
     }
-
-    connectionPool.putBack(connection);
     return rowsUpdated;
   }
-
 
   /*
    * newCar.key is ignored
    * */
   @Override
-  public Car update(Long key, Car newCar) throws SQLException {
-    if (newCar == null || key == null) {
-      throw new IllegalArgumentException("car must not be null");
-    }
-
-    Connection connection = connectionPool.getConnection();
-
+  public Car updateInternal(Long key, Car newCar, Connection connection) throws SQLException {
     updateMark(connection, key, newCar.getMark());
     updateQualityClass(connection, key, newCar.getQualityClass());
     updateName(connection, key, newCar.getName());
     updateBasePrice(connection, key, newCar.getBasePrice());
-
-    connectionPool.putBack(connection);
     return newCar;
   }
 
@@ -194,30 +169,23 @@ public class CarDao implements CrudDao<Car, Long> {
     statement.close();
   }
 
+
   @Override
-  public List<Car> findAll() throws SQLException {
+  public List<Car> findAllInternal(Connection connection) throws SQLException {
     String sql = "select * from cars;";
     List<Car> cars = new ArrayList<>();
-    Connection connection = connectionPool.getConnection();
-
-    try (PreparedStatement statement = connection.prepareStatement(
-        sql); ResultSet resultSet = statement.executeQuery()) {
+    try (PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery()) {
       while (resultSet.next()) {
         cars.add(extractCar(resultSet));
       }
     }
-
-    connectionPool.putBack(connection);
     return cars;
   }
 
   @Override
-  public Car findById(Long key) throws SQLException {
-    if (key == null) {
-      throw new IllegalArgumentException("key must not be null");
-    }
+  public Car findByIdInternal(Long key, Connection connection) throws SQLException {
     String sql = "select * from cars where id = ?;";
-    Connection connection = connectionPool.getConnection();
 
     PreparedStatement statement = connection.prepareStatement(sql);
     statement.setLong(1, key);
@@ -230,7 +198,6 @@ public class CarDao implements CrudDao<Car, Long> {
     resultSet.close();
 
     statement.close();
-    connectionPool.putBack(connection);
     return car;
   }
 

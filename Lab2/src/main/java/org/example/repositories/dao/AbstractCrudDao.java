@@ -79,7 +79,7 @@ public abstract class AbstractCrudDao<T, K> implements CrudDao<T, K> {
 
   public abstract int deleteInternal(K key, Connection connection) throws SQLException;
 
-  public abstract T updateInternal(K key, T newValue, Connection connection);
+  public abstract T updateInternal(K key, T newValue, Connection connection) throws SQLException;
 
   public abstract List<T> findAllInternal(Connection connection) throws SQLException;
 
