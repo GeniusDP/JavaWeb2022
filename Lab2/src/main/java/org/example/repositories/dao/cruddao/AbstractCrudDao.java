@@ -1,4 +1,4 @@
-package org.example.repositories.dao;
+package org.example.repositories.dao.cruddao;
 
 import java.sql.Connection;
 import java.sql.SQLException;

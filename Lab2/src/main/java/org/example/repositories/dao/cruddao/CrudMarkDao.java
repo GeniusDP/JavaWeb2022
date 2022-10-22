@@ -1,4 +1,4 @@
-package org.example.repositories.dao;
+package org.example.repositories.dao.cruddao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +9,17 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import org.example.entities.Mark;
+import org.example.repositories.dao.extractors.Extractor;
+import org.example.repositories.dao.extractors.MarkExtractor;
 import org.example.repositories.dbutils.ConnectionPool;
 
 public class CrudMarkDao extends AbstractCrudDao<Mark, Long> {
 
+  private final Extractor<Mark> markExtractor;
+
   public CrudMarkDao(ConnectionPool connectionPool) {
     super(connectionPool);
+    markExtractor = new MarkExtractor();
   }
 
   @Override
@@ -68,7 +73,7 @@ public class CrudMarkDao extends AbstractCrudDao<Mark, Long> {
     try (PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery()) {
       while (resultSet.next()) {
-        marks.add(extractMark(resultSet));
+        marks.add(markExtractor.extract(resultSet));
       }
     }
 
@@ -85,19 +90,12 @@ public class CrudMarkDao extends AbstractCrudDao<Mark, Long> {
     Mark mark = null;
     ResultSet resultSet = statement.executeQuery();
     if (resultSet.next()) {
-      mark = extractMark(resultSet);
+      mark = markExtractor.extract(resultSet);
     }
     resultSet.close();
 
     statement.close();
     return mark;
   }
-
-  private Mark extractMark(ResultSet resultSet) throws SQLException {
-    long id = resultSet.getLong("id");
-    String name = resultSet.getString("name");
-    return new Mark(id, name);
-  }
-
 
 }

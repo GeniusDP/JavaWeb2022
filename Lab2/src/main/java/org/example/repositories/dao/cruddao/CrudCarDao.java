@@ -1,4 +1,4 @@
-package org.example.repositories.dao;
+package org.example.repositories.dao.cruddao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,12 +11,17 @@ import java.util.List;
 import org.example.entities.Car;
 import org.example.entities.Mark;
 import org.example.entities.QualityClass;
+import org.example.repositories.dao.extractors.CarExtractor;
+import org.example.repositories.dao.extractors.Extractor;
 import org.example.repositories.dbutils.ConnectionPool;
 
 public class CrudCarDao extends AbstractCrudDao<Car, Long> {
 
+  private final Extractor<Car> carExtractor;
+
   public CrudCarDao(ConnectionPool connectionPool) {
     super(connectionPool);
+    carExtractor = new CarExtractor();
   }
 
   @Override
@@ -177,7 +182,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
     try (PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery()) {
       while (resultSet.next()) {
-        cars.add(extractCar(resultSet));
+        cars.add(carExtractor.extract(resultSet));
       }
     }
     return cars;
@@ -193,7 +198,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
     Car car = null;
     ResultSet resultSet = statement.executeQuery();
     if (resultSet.next()) {
-      car = extractCar(resultSet);
+      car = carExtractor.extract(resultSet);
     }
     resultSet.close();
 
@@ -201,15 +206,5 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
     return car;
   }
 
-  private Car extractCar(ResultSet resultSet) throws SQLException {
-    long id = resultSet.getLong("id");
-    long mark_id = resultSet.getLong("mark_id");
-    QualityClass qualityClass = QualityClass.getQualityClass(resultSet.getString("quality_class"));
-    String name = resultSet.getString("name");
-    int basePrice = resultSet.getInt("base_price");
-
-    return Car.builder().id(id).mark(new Mark(mark_id, null)).qualityClass(qualityClass).name(name)
-        .basePrice(basePrice).build();
-  }
 
 }
