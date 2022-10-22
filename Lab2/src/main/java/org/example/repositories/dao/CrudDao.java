@@ -2,6 +2,7 @@ package org.example.repositories.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import org.example.entities.Car;
 
 public interface CrudDao<T, K> {
 
@@ -9,7 +10,7 @@ public interface CrudDao<T, K> {
 
   int delete(K key) throws SQLException;
 
-  int update(K key, T newValue) throws SQLException;
+  T update(K key, T newValue) throws SQLException;
 
   List<T> findAll() throws SQLException;
 

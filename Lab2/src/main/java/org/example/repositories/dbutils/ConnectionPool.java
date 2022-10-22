@@ -9,7 +9,7 @@ import java.util.Vector;
 
 public class ConnectionPool {
 
-  private final static int DEFAULT_POOLS_NUMBER = 10;
+  private final static int DEFAULT_POOLS_NUMBER = 5;
   private final String url;
   private final Vector<Connection> availableConnections;
   private final Vector<Connection> usedConnections;

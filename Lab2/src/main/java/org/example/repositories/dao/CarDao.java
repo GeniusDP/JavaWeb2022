@@ -49,8 +49,17 @@ public class CarDao implements CrudDao<Car, Long> {
       statement.setString(2, qualityClass.name());
     }
 
-    statement.setString(3, car.getName());
-    statement.setInt(4, car.getBasePrice());
+    if (car.getName() == null) {
+      statement.setNull(3, Types.VARCHAR);
+    } else {
+      statement.setString(3, car.getName());
+    }
+
+    if (car.getBasePrice() == null) {
+      statement.setNull(4, Types.BIGINT);
+    } else {
+      statement.setInt(4, car.getBasePrice());
+    }
 
     statement.executeUpdate();
 
@@ -86,52 +95,103 @@ public class CarDao implements CrudDao<Car, Long> {
     return rowsUpdated;
   }
 
+
+  /*
+   * newCar.key is ignored
+   * */
   @Override
-  public int update(Long key, Car newValue) throws SQLException {
-    if (newValue == null || key == null) {
+  public Car update(Long key, Car newCar) throws SQLException {
+    if (newCar == null || key == null) {
       throw new IllegalArgumentException("car must not be null");
     }
-    String sql = """
-          insert into cars(mark_id, quality_class, name, base_price)
-          values(?, ?, ?, ?)
-        """;
+
     Connection connection = connectionPool.getConnection();
 
-    PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+    updateMark(connection, key, newCar.getMark());
+    updateQualityClass(connection, key, newCar.getQualityClass());
+    updateName(connection, key, newCar.getName());
+    updateBasePrice(connection, key, newCar.getBasePrice());
 
-    Mark mark = car.getMark();
-    QualityClass qualityClass = car.getQualityClass();
+    connectionPool.putBack(connection);
+    return newCar;
+  }
 
+  private void updateBasePrice(Connection connection, Long key, Integer basePrice)
+      throws SQLException {
+    String sqlUpdMark = """
+          update cars
+          set base_price = ?
+          where id = ?;
+        """;
+    PreparedStatement statement = connection.prepareStatement(sqlUpdMark);
+    if (basePrice == null) {
+      statement.setNull(1, Types.INTEGER);
+    } else {
+      statement.setInt(1, basePrice);
+    }
+
+    statement.setLong(2, key);
+    statement.executeUpdate();
+
+    statement.close();
+  }
+
+  private void updateName(Connection connection, Long key, String name) throws SQLException {
+    String sqlUpdMark = """
+          update cars
+          set name = ?
+          where id = ?;
+        """;
+    PreparedStatement statement = connection.prepareStatement(sqlUpdMark);
+    if (name == null) {
+      statement.setNull(1, Types.VARCHAR);
+    } else {
+      statement.setString(1, name);
+    }
+
+    statement.setLong(2, key);
+    statement.executeUpdate();
+
+    statement.close();
+  }
+
+  private void updateQualityClass(Connection connection, Long key, QualityClass qualityClass)
+      throws SQLException {
+    String sqlUpdMark = """
+          update cars
+          set quality_class = ?
+          where id = ?;
+        """;
+    PreparedStatement statement = connection.prepareStatement(sqlUpdMark);
+    if (qualityClass == null) {
+      statement.setNull(1, Types.VARCHAR);
+    } else {
+      statement.setString(1, qualityClass.name());
+    }
+
+    statement.setLong(2, key);
+    statement.executeUpdate();
+
+    statement.close();
+  }
+
+  private void updateMark(Connection connection, Long key, Mark mark) throws SQLException {
+    String sqlUpdMark = """
+          update cars
+          set mark_id = ?
+          where id = ?;
+        """;
+    PreparedStatement statement = connection.prepareStatement(sqlUpdMark);
     if (mark == null || mark.getId() == null) {
       statement.setNull(1, Types.BIGINT);
     } else {
       statement.setLong(1, mark.getId());
     }
 
-    if (qualityClass == null) {
-      statement.setNull(2, Types.VARCHAR);
-    } else {
-      statement.setString(2, qualityClass.name());
-    }
-
-    statement.setString(3, car.getName());
-    statement.setInt(4, car.getBasePrice());
-
+    statement.setLong(2, key);
     statement.executeUpdate();
 
-    ResultSet generatedKeys = statement.getGeneratedKeys();
-    if (generatedKeys.next()) {
-      car.setId(generatedKeys.getLong(1));
-    } else {
-      throw new SQLException("Creating car failed, no ID obtained.");
-    }
-    generatedKeys.close();
-
     statement.close();
-
-    connectionPool.putBack(connection);
-    return car;
-
   }
 
   @Override
@@ -140,8 +200,8 @@ public class CarDao implements CrudDao<Car, Long> {
     List<Car> cars = new ArrayList<>();
     Connection connection = connectionPool.getConnection();
 
-    try (PreparedStatement statement = connection.prepareStatement(sql);
-        ResultSet resultSet = statement.executeQuery()) {
+    try (PreparedStatement statement = connection.prepareStatement(
+        sql); ResultSet resultSet = statement.executeQuery()) {
       while (resultSet.next()) {
         cars.add(extractCar(resultSet));
       }
@@ -181,13 +241,8 @@ public class CarDao implements CrudDao<Car, Long> {
     String name = resultSet.getString("name");
     int basePrice = resultSet.getInt("base_price");
 
-    return Car.builder()
-        .id(id)
-        .mark(new Mark(mark_id, null))
-        .qualityClass(qualityClass)
-        .name(name)
-        .basePrice(basePrice)
-        .build();
+    return Car.builder().id(id).mark(new Mark(mark_id, null)).qualityClass(qualityClass).name(name)
+        .basePrice(basePrice).build();
   }
 
 }

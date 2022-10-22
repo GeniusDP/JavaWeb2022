@@ -48,9 +48,14 @@ class CarDaoTest {
 
   @Test
   void update() {
+
   }
 
   @Test
-  void findById() {
+  void findById() throws SQLException {
+    Car byId = dao.findById(12L);
+    System.out.println(byId);
+    byId = dao.findById(100L);
+    System.out.println(byId);
   }
 }
