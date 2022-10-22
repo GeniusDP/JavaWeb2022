@@ -3,12 +3,14 @@ package org.example.repositories;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Mark;
-import org.example.repositories.dao.CrudDao;
+import org.example.repositories.dao.cruddao.CrudDao;
+import org.example.repositories.dao.specificdao.MarkSpecificDao;
 
 @RequiredArgsConstructor
 public class MarkRepository implements CrudRepository<Mark, Long> {
 
   private final CrudDao<Mark, Long> markDao;
+  private final MarkSpecificDao markSpecificDao;
 
   @Override
   public Mark insert(Mark value) {
@@ -33,5 +35,9 @@ public class MarkRepository implements CrudRepository<Mark, Long> {
   @Override
   public Mark findById(Long key) {
     return markDao.findById(key);
+  }
+
+  public Mark findByName(String name) {
+    return markSpecificDao.findByName(name);
   }
 }

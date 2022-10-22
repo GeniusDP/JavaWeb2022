@@ -43,3 +43,5 @@ insert into cars (mark_id, quality_class, name, base_price) values (1, 'BASIC', 
 insert into cars (mark_id, quality_class, name, base_price) values (5, 'PREMIUM', 'Impala', 6953);
 insert into cars (mark_id, quality_class, name, base_price) values (4, 'BUSINESS', 'Express 3500', 14824);
 insert into cars (mark_id, quality_class, name, base_price) values (1, null, 'Spectra', 5923);
+
+
