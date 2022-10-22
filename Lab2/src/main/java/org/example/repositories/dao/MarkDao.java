@@ -18,7 +18,7 @@ public class MarkDao extends AbstractCrudDao<Mark, Long> {
   }
 
   @Override
-  public Mark insertInternal(Mark mark, Connection connection) throws SQLException {
+  protected Mark insertInternal(Mark mark, Connection connection) throws SQLException {
     String sql = "insert into marks(name) values (?);";
 
     PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -45,7 +45,7 @@ public class MarkDao extends AbstractCrudDao<Mark, Long> {
   }
 
   @Override
-  public int deleteInternal(Long key, Connection connection) throws SQLException {
+  protected int deleteInternal(Long key, Connection connection) throws SQLException {
     String sql = "delete from marks where id = ?;";
     int rowsUpdated = 0;
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -56,12 +56,12 @@ public class MarkDao extends AbstractCrudDao<Mark, Long> {
   }
 
   @Override
-  public Mark updateInternal(Long key, Mark newValue, Connection connection) {
+  protected Mark updateInternal(Long key, Mark newValue, Connection connection) {
     throw new IllegalArgumentException("not implemented yet");
   }
 
   @Override
-  public List<Mark> findAllInternal(Connection connection) throws SQLException {
+  protected List<Mark> findAllInternal(Connection connection) throws SQLException {
     String sql = "select * from marks;";
     List<Mark> marks = new ArrayList<>();
 
@@ -76,7 +76,7 @@ public class MarkDao extends AbstractCrudDao<Mark, Long> {
   }
 
   @Override
-  public Mark findByIdInternal(Long key, Connection connection) throws SQLException {
+  protected Mark findByIdInternal(Long key, Connection connection) throws SQLException {
     String sql = "select * from marks where id = ?;";
 
     PreparedStatement statement = connection.prepareStatement(sql);

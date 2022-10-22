@@ -1,8 +1,8 @@
-package org.example.repositories.dao;
+package org.example.repositories;
 
 import java.util.List;
 
-public interface CrudDao<T, K> {
+public interface CrudRepository<T, K> {
 
   T insert(T value);
 

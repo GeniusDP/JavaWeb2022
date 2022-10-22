@@ -17,7 +17,7 @@ insert into marks (name) values ('Lexus');
 create table cars
 (
     id            bigserial primary key,
-    mark_id       bigint references marks (id),
+    mark_id       bigint references marks (id) on delete cascade,
     quality_class varchar(30),
     name          varchar(200) not null,
     base_price    int          not null

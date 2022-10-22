@@ -20,7 +20,7 @@ public class CarDao extends AbstractCrudDao<Car, Long> {
   }
 
   @Override
-  public Car insertInternal(Car car, Connection connection) throws SQLException {
+  protected Car insertInternal(Car car, Connection connection) throws SQLException {
     String sql = """
           insert into cars(mark_id, quality_class, name, base_price)
           values(?, ?, ?, ?)
@@ -69,7 +69,7 @@ public class CarDao extends AbstractCrudDao<Car, Long> {
   }
 
   @Override
-  public int deleteInternal(Long key, Connection connection) throws SQLException {
+  protected int deleteInternal(Long key, Connection connection) throws SQLException {
     String sql = "delete from cars where id = ?;";
     int rowsUpdated = 0;
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -83,7 +83,7 @@ public class CarDao extends AbstractCrudDao<Car, Long> {
    * newCar.key is ignored
    * */
   @Override
-  public Car updateInternal(Long key, Car newCar, Connection connection) throws SQLException {
+  protected Car updateInternal(Long key, Car newCar, Connection connection) throws SQLException {
     updateMark(connection, key, newCar.getMark());
     updateQualityClass(connection, key, newCar.getQualityClass());
     updateName(connection, key, newCar.getName());
@@ -171,7 +171,7 @@ public class CarDao extends AbstractCrudDao<Car, Long> {
 
 
   @Override
-  public List<Car> findAllInternal(Connection connection) throws SQLException {
+  protected List<Car> findAllInternal(Connection connection) throws SQLException {
     String sql = "select * from cars;";
     List<Car> cars = new ArrayList<>();
     try (PreparedStatement statement = connection.prepareStatement(sql);
@@ -184,7 +184,7 @@ public class CarDao extends AbstractCrudDao<Car, Long> {
   }
 
   @Override
-  public Car findByIdInternal(Long key, Connection connection) throws SQLException {
+  protected Car findByIdInternal(Long key, Connection connection) throws SQLException {
     String sql = "select * from cars where id = ?;";
 
     PreparedStatement statement = connection.prepareStatement(sql);
