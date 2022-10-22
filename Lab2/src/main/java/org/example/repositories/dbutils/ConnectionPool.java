@@ -73,7 +73,7 @@ public class ConnectionPool {
       if (usedConnections.removeElement(c)) {
         availableConnections.addElement(c);
       } else {
-        throw new NullPointerException("Connection not from this connection pool");
+        throw new IllegalArgumentException("Connection not from this connection pool");
       }
     }
   }

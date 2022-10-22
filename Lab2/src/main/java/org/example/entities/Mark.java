@@ -1,13 +1,12 @@
 package org.example.entities;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Setter;
 
 @Data
+@AllArgsConstructor
 public class Mark {
 
-  @Setter(AccessLevel.NONE)
   private Long id;
 
   private String name;
@@ -15,4 +14,5 @@ public class Mark {
   public Mark(String name) {
     this.name = name;
   }
+
 }

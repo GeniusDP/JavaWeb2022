@@ -1,18 +1,15 @@
 package org.example.entities;
 
 import java.time.LocalDate;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Setter;
 
 @Data
 @Builder
 @AllArgsConstructor
 public class User {
 
-  @Setter(AccessLevel.NONE)
   private Long id;
 
   private String username;
