@@ -4,7 +4,7 @@ drop table if exists cars, marks cascade;
 create table marks
 (
     id   bigserial primary key,
-    name varchar(200) not null
+    name varchar(200) not null unique
 );
 
 insert into marks (name) values ('BMW');
@@ -19,7 +19,7 @@ create table cars
     id            bigserial primary key,
     mark_id       bigint references marks (id) on delete cascade,
     quality_class varchar(30),
-    name          varchar(200) not null,
+    name          varchar(200) not null unique,
     base_price    int          not null
 );
 
@@ -38,7 +38,7 @@ insert into cars (mark_id, quality_class, name, base_price) values (6, 'PREMIUM'
 insert into cars (mark_id, quality_class, name, base_price) values (2, 'BUSINESS', 'H1', 8667);
 insert into cars (mark_id, quality_class, name, base_price) values (5, 'BASIC', 'B-Series', 7668);
 insert into cars (mark_id, quality_class, name, base_price) values (2, null, 'SL-Class', 17260);
-insert into cars (mark_id, quality_class, name, base_price) values (2, 'BUSINESS', 'Accord', 7658);
+insert into cars (mark_id, quality_class, name, base_price) values (2, 'BUSINESS', 'Konkord', 7658);
 insert into cars (mark_id, quality_class, name, base_price) values (1, 'BASIC', 'Challenger', 13321);
 insert into cars (mark_id, quality_class, name, base_price) values (5, 'PREMIUM', 'Impala', 6953);
 insert into cars (mark_id, quality_class, name, base_price) values (4, 'BUSINESS', 'Express 3500', 14824);
