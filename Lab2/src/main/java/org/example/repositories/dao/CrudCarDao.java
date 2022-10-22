@@ -13,9 +13,9 @@ import org.example.entities.Mark;
 import org.example.entities.QualityClass;
 import org.example.repositories.dbutils.ConnectionPool;
 
-public class CarDao extends AbstractCrudDao<Car, Long> {
+public class CrudCarDao extends AbstractCrudDao<Car, Long> {
 
-  public CarDao(ConnectionPool connectionPool) {
+  public CrudCarDao(ConnectionPool connectionPool) {
     super(connectionPool);
   }
 

@@ -11,9 +11,9 @@ import java.util.List;
 import org.example.entities.Mark;
 import org.example.repositories.dbutils.ConnectionPool;
 
-public class MarkDao extends AbstractCrudDao<Mark, Long> {
+public class CrudMarkDao extends AbstractCrudDao<Mark, Long> {
 
-  public MarkDao(ConnectionPool connectionPool) {
+  public CrudMarkDao(ConnectionPool connectionPool) {
     super(connectionPool);
   }
 
