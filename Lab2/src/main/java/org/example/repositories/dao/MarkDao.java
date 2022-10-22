@@ -8,26 +8,18 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import org.example.entities.Car;
 import org.example.entities.Mark;
-import org.example.entities.QualityClass;
 import org.example.repositories.dbutils.ConnectionPool;
 
-public class MarkDao implements CrudDao<Mark, Long> {
-
-  private final ConnectionPool connectionPool;
+public class MarkDao extends AbstractCrudDao<Mark, Long> {
 
   public MarkDao(ConnectionPool connectionPool) {
-    this.connectionPool = connectionPool;
+    super(connectionPool);
   }
 
   @Override
-  public Mark insert(Mark mark) throws SQLException {
-    if (mark == null) {
-      throw new IllegalArgumentException("mark must not be null");
-    }
+  public Mark insertInternal(Mark mark, Connection connection) throws SQLException {
     String sql = "insert into marks(name) values (?);";
-    Connection connection = connectionPool.getConnection();
 
     PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -49,36 +41,27 @@ public class MarkDao implements CrudDao<Mark, Long> {
 
     statement.close();
 
-    connectionPool.putBack(connection);
     return mark;
   }
 
   @Override
-  public int delete(Long key) throws SQLException {
-    if (key == null) {
-      throw new IllegalArgumentException("key must not be null");
-    }
+  public int deleteInternal(Long key, Connection connection) throws SQLException {
     String sql = "delete from marks where id = ?;";
-    Connection connection = connectionPool.getConnection();
-
     int rowsUpdated = 0;
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setLong(1, key);
       rowsUpdated = statement.executeUpdate();
     }
-
-    connectionPool.putBack(connection);
     return rowsUpdated;
   }
 
   @Override
-  public Mark update(Long key, Mark newValue) throws SQLException {
+  public Mark updateInternal(Long key, Mark newValue, Connection connection) {
     throw new IllegalArgumentException("not implemented yet");
   }
 
   @Override
-  public List<Mark> findAll() throws SQLException {
-    Connection connection = connectionPool.getConnection();
+  public List<Mark> findAllInternal(Connection connection) throws SQLException {
     String sql = "select * from marks;";
     List<Mark> marks = new ArrayList<>();
 
@@ -89,17 +72,12 @@ public class MarkDao implements CrudDao<Mark, Long> {
       }
     }
 
-    connectionPool.putBack(connection);
     return marks;
   }
 
   @Override
-  public Mark findById(Long key) throws SQLException {
-    if (key == null) {
-      throw new IllegalArgumentException("key must not be null");
-    }
+  public Mark findByIdInternal(Long key, Connection connection) throws SQLException {
     String sql = "select * from marks where id = ?;";
-    Connection connection = connectionPool.getConnection();
 
     PreparedStatement statement = connection.prepareStatement(sql);
     statement.setLong(1, key);
@@ -112,7 +90,6 @@ public class MarkDao implements CrudDao<Mark, Long> {
     resultSet.close();
 
     statement.close();
-    connectionPool.putBack(connection);
     return mark;
   }
 
