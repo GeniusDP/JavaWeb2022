@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Car;
 import org.example.entities.Mark;
+import org.example.entities.QualityClass;
 import org.example.repositories.dao.cruddao.CrudDao;
 import org.example.repositories.dao.specificdao.CarSpecificDao;
 
@@ -51,6 +52,9 @@ public class CarRepository implements CrudRepository<Car, Long> {
   @Override
   public Car findById(Long key) {
     Car car = crudCarDao.findById(key);
+    if(car == null){
+      return null;
+    }
     Mark mark = car.getMark();
     if (mark == null || mark.getId() == null) {
       return car;
@@ -64,4 +68,17 @@ public class CarRepository implements CrudRepository<Car, Long> {
   public List<Car> findAllByMarkName(String markName) {
     return carSpecificDao.findAllByMarkName(markName);
   }
+
+  public List<Car> findAllByQualityClass(QualityClass qc) {
+    return carSpecificDao.findAllByQualityClass(qc);
+  }
+
+  public List<Car> findAllByPriceOrdered() {
+    return carSpecificDao.findAllByPriceOrdered();
+  }
+
+  public List<Car> findAllByNameOrdered() {
+    return carSpecificDao.findAllByNameOrdered();
+  }
+
 }

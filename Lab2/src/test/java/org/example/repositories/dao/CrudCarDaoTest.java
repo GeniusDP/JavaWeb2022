@@ -64,7 +64,7 @@ class CrudCarDaoTest {
 
   @Test
   void findById() {
-    Car byId = crudCarDao.findById(21L);
+    Car byId = crudCarDao.findById(12L);
     System.out.println(byId);
     byId = crudCarDao.findById(100L);
     System.out.println(byId);
@@ -78,9 +78,39 @@ class CrudCarDaoTest {
   }
 
   @Test
+  void repositoryFindById() {
+    CarRepository carRepository = new CarRepository(crudCarDao, markRepository, carSpecificDao);
+    Car byId = carRepository.findById(12L);
+    System.out.println(byId);
+    byId = carRepository.findById(100L);
+    System.out.println(byId);
+  }
+
+  @Test
   void repositoryFindAllCarsByMarkName(){
     CarRepository carRepository = new CarRepository(crudCarDao, markRepository, carSpecificDao);
     List<Car> all = carRepository.findAllByMarkName("Lexus");
+    all.forEach(System.out::println);
+  }
+
+  @Test
+  void repositoryFindAllCarsByQualityClass(){
+    CarRepository carRepository = new CarRepository(crudCarDao, markRepository, carSpecificDao);
+    List<Car> all = carRepository.findAllByQualityClass(QualityClass.BASIC);
+    all.forEach(System.out::println);
+  }
+
+  @Test
+  void findAllByPriceOrdered(){
+    CarRepository carRepository = new CarRepository(crudCarDao, markRepository, carSpecificDao);
+    List<Car> all = carRepository.findAllByPriceOrdered();
+    all.forEach(System.out::println);
+  }
+
+  @Test
+  void findAllByNameOrdered(){
+    CarRepository carRepository = new CarRepository(crudCarDao, markRepository, carSpecificDao);
+    List<Car> all = carRepository.findAllByNameOrdered();
     all.forEach(System.out::println);
   }
 
