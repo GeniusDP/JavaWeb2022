@@ -1,4 +1,4 @@
-drop table if exists cars, marks cascade;
+drop table if exists cars, marks, car_users cascade;
 
 
 create table marks
@@ -44,4 +44,10 @@ insert into cars (mark_id, quality_class, name, base_price) values (5, 'PREMIUM'
 insert into cars (mark_id, quality_class, name, base_price) values (4, 'BUSINESS', 'Express 3500', 14824);
 insert into cars (mark_id, quality_class, name, base_price) values (1, null, 'Spectra', 5923);
 
-
+create table car_users
+(
+    id       bigserial primary key,
+    username varchar(50) not null unique,
+    password varchar(50) not null unique,
+    role varchar(15) not null unique
+);
