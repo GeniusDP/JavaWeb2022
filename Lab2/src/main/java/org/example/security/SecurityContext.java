@@ -24,4 +24,7 @@ public class SecurityContext {
     this.user = user;
   }
 
+  public boolean isEmpty(){
+    return user == null;
+  }
 }

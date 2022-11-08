@@ -53,3 +53,6 @@ create table car_users
     last_name varchar(50) not null,
     role varchar(15) not null
 );
+
+insert into car_users (username, password, first_name, last_name, role)
+values ('admin', 'admin', 'admin', 'admin', 'ADMIN');

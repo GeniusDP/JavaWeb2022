@@ -10,10 +10,7 @@ import org.example.repositories.MarkRepository;
 import org.example.repositories.dao.cruddao.CrudCarDao;
 import org.example.repositories.dao.cruddao.CrudMarkDao;
 import org.example.repositories.dao.cruddao.CrudUserDao;
-import org.example.repositories.dao.specificdao.CarSpecificDao;
-import org.example.repositories.dao.specificdao.CarSpecificDaoImpl;
-import org.example.repositories.dao.specificdao.MarkSpecificDao;
-import org.example.repositories.dao.specificdao.MarkSpecificDaoImpl;
+import org.example.repositories.dao.specificdao.*;
 import org.example.repositories.dbutils.ConnectionPool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +22,7 @@ class CrudCarDaoTest {
   private MarkRepository markRepository;
   private CarSpecificDao carSpecificDao;
   private CrudUserDao userDao;
+  private UserSpecificDao userSpecificDao;
 
   @BeforeEach
   public void init(){
@@ -36,6 +34,7 @@ class CrudCarDaoTest {
     MarkSpecificDao markSpecificDao = new MarkSpecificDaoImpl(connectionPool);
     carSpecificDao = new CarSpecificDaoImpl(connectionPool);
     markRepository = new MarkRepository(crudMarkDao, markSpecificDao);
+    userSpecificDao = new UserSpecificDaoImpl(connectionPool);
   }
 
   @Test
@@ -133,6 +132,12 @@ class CrudCarDaoTest {
   void findAllUsers(){
     List<User> all = userDao.findAll();
     all.forEach(System.out::println);
+  }
+
+  @Test
+  void findUserByUsername(){
+    User user = userSpecificDao.findByUsername("admin");
+    System.out.println(user);
   }
 
 }

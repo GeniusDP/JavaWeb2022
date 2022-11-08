@@ -35,12 +35,15 @@ public class MarkSpecificDaoImpl implements MarkSpecificDao{
       PreparedStatement statement = connection.prepareStatement(sql);
       statement.setString(1, name);
       ResultSet resultSet = statement.executeQuery();
-      result = markExtractor.extract(resultSet);
+      if(resultSet.next()) {
+        result = markExtractor.extract(resultSet);
+      }
     } catch (SQLException e) {
       throw new DatabaseException(e);
+    } finally {
+      connectionPool.putBack(connection);
     }
-
-    connectionPool.putBack(connection);
     return result;
   }
+
 }
