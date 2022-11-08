@@ -48,6 +48,8 @@ create table car_users
 (
     id       bigserial primary key,
     username varchar(50) not null unique,
-    password varchar(50) not null unique,
-    role varchar(15) not null unique
+    password varchar(50) not null,
+    first_name varchar(50) not null,
+    last_name varchar(50) not null,
+    role varchar(15) not null
 );

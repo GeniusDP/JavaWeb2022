@@ -12,11 +12,15 @@ public class UserExtractor implements Extractor<User> {
         Long id = rs.getObject("id", Long.class);
         String username = rs.getString("username");
         String password = rs.getString("password");
+        String firstName = rs.getString("first_name");
+        String lastName = rs.getString("last_name");
         String role = rs.getString("role");
         return User.builder()
                 .id(id)
                 .username(username)
                 .password(password)
+                .firstName(firstName)
+                .lastName(lastName)
                 .role(Role.getRole(role))
                 .build();
     }

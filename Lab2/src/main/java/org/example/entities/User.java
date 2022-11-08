@@ -20,17 +20,13 @@ public class User {
 
   private String lastName;
 
-  private LocalDate dateOfBirth;
-
   private Role role;
 
-  public User(String username, String password, String firstName, String lastName,
-      LocalDate dateOfBirth, Role role) {
+  public User(String username, String password, String firstName, String lastName, Role role) {
     this.username = username;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.dateOfBirth = dateOfBirth;
     this.role = role;
   }
 }

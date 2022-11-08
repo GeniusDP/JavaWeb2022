@@ -21,12 +21,14 @@ public class CrudUserDao extends AbstractCrudDao<User, Long> {
 
     @Override
     protected User insertInternal(User user, Connection connection) throws SQLException {
-        String sql = "insert into car_users(username, password, role) values (?, ?, ?);";
+        String sql = "insert into car_users(username, password, first_name, last_name, role) values (?, ?, ?, ?, ?)";
 
         PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, user.getUsername());
         statement.setString(2, user.getPassword());
-        statement.setString(3, user.getRole().name());
+        statement.setString(3, user.getFirstName());
+        statement.setString(4, user.getLastName());
+        statement.setString(5, user.getRole().name());
         statement.executeUpdate();
 
         ResultSet generatedKeys = statement.getGeneratedKeys();

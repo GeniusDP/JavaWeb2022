@@ -2,14 +2,14 @@ package org.example.repositories.dao;
 
 
 import java.util.List;
-import org.example.entities.Car;
-import org.example.entities.Mark;
-import org.example.entities.QualityClass;
+
+import org.example.entities.*;
 import org.example.repositories.CarRepository;
 import org.example.repositories.CrudRepository;
 import org.example.repositories.MarkRepository;
 import org.example.repositories.dao.cruddao.CrudCarDao;
 import org.example.repositories.dao.cruddao.CrudMarkDao;
+import org.example.repositories.dao.cruddao.CrudUserDao;
 import org.example.repositories.dao.specificdao.CarSpecificDao;
 import org.example.repositories.dao.specificdao.CarSpecificDaoImpl;
 import org.example.repositories.dao.specificdao.MarkSpecificDao;
@@ -24,6 +24,7 @@ class CrudCarDaoTest {
   private CrudMarkDao crudMarkDao;
   private MarkRepository markRepository;
   private CarSpecificDao carSpecificDao;
+  private CrudUserDao userDao;
 
   @BeforeEach
   public void init(){
@@ -31,6 +32,7 @@ class CrudCarDaoTest {
     ConnectionPool connectionPool = new ConnectionPool(url, "org.postgresql.Driver");
     crudCarDao = new CrudCarDao(connectionPool);
     crudMarkDao = new CrudMarkDao(connectionPool);
+    userDao = new CrudUserDao(connectionPool);
     MarkSpecificDao markSpecificDao = new MarkSpecificDaoImpl(connectionPool);
     carSpecificDao = new CarSpecificDaoImpl(connectionPool);
     markRepository = new MarkRepository(crudMarkDao, markSpecificDao);
@@ -114,5 +116,23 @@ class CrudCarDaoTest {
     all.forEach(System.out::println);
   }
 
+  @Test
+  void insertUser(){
+    User user = User.builder()
+            .firstName("Bogdan")
+            .lastName("Zaranik")
+            .username("bz2002")
+            .password("1234")
+            .role(Role.CLIENT)
+            .build();
+    user = userDao.insert(user);
+    System.out.println(user);
+  }
+
+  @Test
+  void findAllUsers(){
+    List<User> all = userDao.findAll();
+    all.forEach(System.out::println);
+  }
 
 }
