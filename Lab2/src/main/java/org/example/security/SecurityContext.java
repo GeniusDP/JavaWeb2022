@@ -27,4 +27,8 @@ public class SecurityContext {
   public boolean isEmpty(){
     return user == null;
   }
+
+  public User getSubject(){
+    return user;
+  }
 }

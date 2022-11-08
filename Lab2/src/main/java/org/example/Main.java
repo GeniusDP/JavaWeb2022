@@ -1,9 +1,7 @@
 package org.example;
 
-import org.example.controllers.Controller;
-import org.example.entities.Car;
+import org.example.controllers.main.Controller;
 import org.example.repositories.CarRepository;
-import org.example.repositories.CrudRepository;
 import org.example.repositories.MarkRepository;
 import org.example.repositories.UserRepository;
 import org.example.repositories.dao.cruddao.CrudCarDao;
@@ -11,6 +9,7 @@ import org.example.repositories.dao.cruddao.CrudMarkDao;
 import org.example.repositories.dao.cruddao.CrudUserDao;
 import org.example.repositories.dao.specificdao.*;
 import org.example.repositories.dbutils.ConnectionPool;
+import org.example.views.main.MainView;
 
 import java.sql.SQLException;
 /*
@@ -46,6 +45,7 @@ public class Main {
     CarRepository carRepository;
     UserRepository userRepository;
     UserSpecificDao userSpecificDao;
+    MainView mainView;
 
     crudCarDao = new CrudCarDao(connectionPool);
     crudMarkDao = new CrudMarkDao(connectionPool);
@@ -53,11 +53,12 @@ public class Main {
     markSpecificDao = new MarkSpecificDaoImpl(connectionPool);
     carSpecificDao = new CarSpecificDaoImpl(connectionPool);
     userSpecificDao = new UserSpecificDaoImpl(connectionPool);
+    mainView = new MainView();
 
     markRepository = new MarkRepository(crudMarkDao, markSpecificDao);
     carRepository = new CarRepository(crudCarDao, markRepository, carSpecificDao);
     userRepository = new UserRepository(userDao, userSpecificDao);
-    Controller controller = new Controller(carRepository, markRepository, userRepository);
+    Controller controller = new Controller(carRepository, markRepository, userRepository, mainView);
     controller.start();
   }
 }
