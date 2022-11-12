@@ -9,7 +9,6 @@ public class SecurityContext {
   public static SecurityContext getContext(){
     if(context == null){
       context = new SecurityContext(null);
-      return context;
     }
     return context;
   }
