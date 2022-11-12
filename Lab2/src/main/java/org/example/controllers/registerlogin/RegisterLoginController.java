@@ -2,7 +2,6 @@ package org.example.controllers.registerlogin;
 
 import lombok.RequiredArgsConstructor;
 import org.example.services.RegisterLoginService;
-import org.example.views.registerlogin.LoginRegisterAction;
 import org.example.views.registerlogin.RegisterLoginView;
 
 @RequiredArgsConstructor

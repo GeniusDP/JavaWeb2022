@@ -28,7 +28,7 @@ public class MarkSpecificDaoImpl implements MarkSpecificDao{
     }
     Connection connection = connectionPool.getConnection();
 
-    String sql = "select * from marks where name = ?;";
+    String sql = "select * from lab_java.marks where name = ?;";
 
     Mark result = null;
     try {

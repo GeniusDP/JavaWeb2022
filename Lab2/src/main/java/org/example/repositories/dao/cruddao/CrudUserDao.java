@@ -1,6 +1,5 @@
 package org.example.repositories.dao.cruddao;
 
-import org.example.entities.Mark;
 import org.example.entities.User;
 import org.example.repositories.dao.extractors.Extractor;
 import org.example.repositories.dao.extractors.UserExtractor;
@@ -21,7 +20,7 @@ public class CrudUserDao extends AbstractCrudDao<User, Long> {
 
     @Override
     protected User insertInternal(User user, Connection connection) throws SQLException {
-        String sql = "insert into car_users(username, password, first_name, last_name, role) values (?, ?, ?, ?, ?)";
+        String sql = "insert into lab_java.car_users(username, password, first_name, last_name, role) values (?, ?, ?, ?, ?)";
 
         PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, user.getUsername());
@@ -56,7 +55,7 @@ public class CrudUserDao extends AbstractCrudDao<User, Long> {
 
     @Override
     protected List<User> findAllInternal(Connection connection) throws SQLException {
-        String sql = "select * from car_users;";
+        String sql = "select * from lab_java.car_users;";
         List<User> users = new ArrayList<>();
 
         try (PreparedStatement statement = connection.prepareStatement(sql);
@@ -71,7 +70,7 @@ public class CrudUserDao extends AbstractCrudDao<User, Long> {
 
     @Override
     protected User findByIdInternal(Long key, Connection connection) throws SQLException {
-        String sql = "select * from car_users where id = ?;";
+        String sql = "select * from lab_java.car_users where id = ?;";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setLong(1, key);
 

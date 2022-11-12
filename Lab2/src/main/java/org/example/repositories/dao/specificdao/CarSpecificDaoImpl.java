@@ -33,8 +33,8 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
     Connection connection = connectionPool.getConnection();
 
     String sql = """
-          select cars.id, mark_id, quality_class, cars.name, base_price from cars
-          inner join marks as m on m.id = cars.mark_id
+          select cars.id, mark_id, quality_class, cars.name, base_price from lab_java.cars
+          inner join lab_java.marks as m on m.id = lab_java.cars.mark_id
           where m.name = ?;
         """;
     try {
@@ -56,7 +56,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
     Connection connection = connectionPool.getConnection();
 
     String sql = """
-        select * from cars where quality_class = ?
+        select * from lab_java.cars where quality_class = ?
         """;
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
@@ -74,7 +74,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
     Connection connection = connectionPool.getConnection();
 
     String sql = """
-        select * from cars order by base_price;
+        select * from lab_java.cars order by base_price;
         """;
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
@@ -91,7 +91,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
     Connection connection = connectionPool.getConnection();
 
     String sql = """
-        select * from cars order by name;
+        select * from lab_java.cars order by name;
         """;
     try {
       PreparedStatement statement = connection.prepareStatement(sql);

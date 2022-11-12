@@ -1,9 +1,11 @@
 package org.example.views.registerlogin;
 
+import org.example.controllers.registerlogin.LoginRegisterAction;
+
 import java.util.Scanner;
 
-import static org.example.views.registerlogin.LoginRegisterAction.LOGIN;
-import static org.example.views.registerlogin.LoginRegisterAction.REGISTER;
+import static org.example.controllers.registerlogin.LoginRegisterAction.LOGIN;
+import static org.example.controllers.registerlogin.LoginRegisterAction.REGISTER;
 
 public class RegisterLoginView {
 

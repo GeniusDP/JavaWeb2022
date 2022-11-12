@@ -24,7 +24,7 @@ public class CrudMarkDao extends AbstractCrudDao<Mark, Long> {
 
   @Override
   protected Mark insertInternal(Mark mark, Connection connection) throws SQLException {
-    String sql = "insert into marks(name) values (?);";
+    String sql = "insert into lab_java.marks(name) values (?);";
 
     PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -51,7 +51,7 @@ public class CrudMarkDao extends AbstractCrudDao<Mark, Long> {
 
   @Override
   protected int deleteInternal(Long key, Connection connection) throws SQLException {
-    String sql = "delete from marks where id = ?;";
+    String sql = "delete from lab_java.marks where id = ?;";
     int rowsUpdated = 0;
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setLong(1, key);
@@ -67,7 +67,7 @@ public class CrudMarkDao extends AbstractCrudDao<Mark, Long> {
 
   @Override
   protected List<Mark> findAllInternal(Connection connection) throws SQLException {
-    String sql = "select * from marks;";
+    String sql = "select * from lab_java.marks;";
     List<Mark> marks = new ArrayList<>();
 
     try (PreparedStatement statement = connection.prepareStatement(sql);
@@ -82,7 +82,7 @@ public class CrudMarkDao extends AbstractCrudDao<Mark, Long> {
 
   @Override
   protected Mark findByIdInternal(Long key, Connection connection) throws SQLException {
-    String sql = "select * from marks where id = ?;";
+    String sql = "select * from lab_java.marks where id = ?;";
 
     PreparedStatement statement = connection.prepareStatement(sql);
     statement.setLong(1, key);

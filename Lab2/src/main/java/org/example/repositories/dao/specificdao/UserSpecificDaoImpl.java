@@ -31,7 +31,7 @@ public class UserSpecificDaoImpl implements UserSpecificDao {
         }
         Connection connection = connectionPool.getConnection();
 
-        String sql = "select * from car_users where username = ?;";
+        String sql = "select * from lab_java.car_users where username = ?;";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);

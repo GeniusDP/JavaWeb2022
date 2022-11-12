@@ -27,7 +27,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
   @Override
   protected Car insertInternal(Car car, Connection connection) throws SQLException {
     String sql = """
-          insert into cars(mark_id, quality_class, name, base_price)
+          insert into lab_java.cars(mark_id, quality_class, name, base_price)
           values(?, ?, ?, ?)
         """;
     PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -75,7 +75,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
 
   @Override
   protected int deleteInternal(Long key, Connection connection) throws SQLException {
-    String sql = "delete from cars where id = ?;";
+    String sql = "delete from lab_java.cars where id = ?;";
     int rowsUpdated = 0;
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setLong(1, key);
@@ -99,7 +99,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
   private void updateBasePrice(Connection connection, Long key, Integer basePrice)
       throws SQLException {
     String sqlUpdMark = """
-          update cars
+          update lab_java.cars
           set base_price = ?
           where id = ?;
         """;
@@ -118,7 +118,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
 
   private void updateName(Connection connection, Long key, String name) throws SQLException {
     String sqlUpdMark = """
-          update cars
+          update lab_java.cars
           set name = ?
           where id = ?;
         """;
@@ -138,7 +138,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
   private void updateQualityClass(Connection connection, Long key, QualityClass qualityClass)
       throws SQLException {
     String sqlUpdMark = """
-          update cars
+          update lab_java.cars
           set quality_class = ?
           where id = ?;
         """;
@@ -157,7 +157,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
 
   private void updateMark(Connection connection, Long key, Mark mark) throws SQLException {
     String sqlUpdMark = """
-          update cars
+          update lab_java.cars
           set mark_id = ?
           where id = ?;
         """;
@@ -177,7 +177,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
 
   @Override
   protected List<Car> findAllInternal(Connection connection) throws SQLException {
-    String sql = "select * from cars;";
+    String sql = "select * from lab_java.cars;";
     List<Car> cars = new ArrayList<>();
     try (PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery()) {
@@ -190,7 +190,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
 
   @Override
   protected Car findByIdInternal(Long key, Connection connection) throws SQLException {
-    String sql = "select * from cars where id = ?;";
+    String sql = "select * from lab_java.cars where id = ?;";
 
     PreparedStatement statement = connection.prepareStatement(sql);
     statement.setLong(1, key);

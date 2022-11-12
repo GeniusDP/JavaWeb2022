@@ -32,7 +32,7 @@ import java.sql.SQLException;
  */
 public class Main {
 
-  public static void main(String[] args) throws SQLException {
+  public static void main(String[] args) {
     String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=zaranik";
     ConnectionPool connectionPool = new ConnectionPool(url, "org.postgresql.Driver");
 

@@ -15,4 +15,9 @@ public class Mark {
     this.name = name;
   }
 
+  @Override
+  public String toString() {
+    return String.format("Mark(id=%3s, name=%10s)", id, name);
+  }
+
 }

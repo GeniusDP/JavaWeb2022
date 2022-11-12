@@ -1,4 +1,4 @@
-package org.example.views.registerlogin;
+package org.example.controllers.registerlogin;
 
 
 public enum LoginRegisterAction {
