@@ -27,4 +27,12 @@ public class CarsService {
   public List<Car> getCarsSortedByName() {
     return carRepository.findAllByNameOrdered();
   }
+
+  public boolean existsById(long carId) {
+    return carRepository.findById(carId) != null;
+  }
+
+  public Car getCarById(long id) {
+    return carRepository.findById(id);
+  }
 }

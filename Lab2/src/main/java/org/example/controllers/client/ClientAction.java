@@ -5,6 +5,7 @@ public enum ClientAction {
   SHOW_CARS_BY_CLASS,
   SORT_CARS_BY_PRICE,
   SORT_CARS_BY_NAME,
+  RENT_A_CAR,
   LOG_OUT;
 
   public static ClientAction getAction(String value){
@@ -16,6 +17,7 @@ public enum ClientAction {
       case "SHOW_CARS_BY_CLASS" -> SHOW_CARS_BY_CLASS;
       case "SORT_CARS_BY_PRICE" -> SORT_CARS_BY_PRICE;
       case "SORT_CARS_BY_NAME" -> SORT_CARS_BY_NAME;
+      case "RENT_A_CAR" -> RENT_A_CAR;
       default -> LOG_OUT;
     };
   }

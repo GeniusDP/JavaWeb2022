@@ -12,25 +12,56 @@ public class ClientView {
   private final Scanner scanner = new Scanner(System.in);
 
   public ClientAction chooseAction() {
-    System.out.println("Write action what to do. All variants: ");
-    Arrays.stream(ClientAction.values()).forEach(System.out::println);
+    printMessage("Write action what to do. All variants: ");
+    Arrays.stream(ClientAction.values()).forEach(this::printMessage);
     String value = scanner.nextLine();
     return ClientAction.getAction(value);
   }
 
   public String getCarMark() {
-    System.out.println("Write mark name:");
+    printMessage("Write mark name:");
     return scanner.nextLine();
   }
 
   public void printCars(String message, List<Car> cars) {
-    System.out.println(message);
+    printMessage(message);
     cars.forEach(System.out::println);
   }
 
   public String getCarClass() {
-    System.out.println("Write quality class name:");
+    printMessage("Write quality class name:");
     return scanner.nextLine();
   }
 
+  public int getCarId() {
+    printMessage("Write car id:");
+    return scanner.nextInt();
+  }
+
+  public void printMessage(String message) {
+    System.out.println(message);
+  }
+
+  public void printMessage(Object value) {
+    printMessage(value.toString());
+  }
+
+  public void printNoCarWithSuchIdFound() {
+    printMessage("No car with such ID:(");
+  }
+
+  public int getDaysRent() {
+    printMessage("How much days of rent do you need? Write, pls:");
+    int days;
+    while ((days = scanner.nextInt()) <= 0){
+      printMessage("");
+    }
+    return days;
+  }
+
+  public boolean needDriver() {
+    printMessage("Do you need a driver? Write YES or NO: ");
+    String driverNeeded =
+
+  }
 }
