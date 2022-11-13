@@ -5,6 +5,7 @@ public enum ClientAction {
   SHOW_CARS_BY_CLASS,
   SORT_CARS_BY_PRICE,
   SORT_CARS_BY_NAME,
+  SHOW_MY_RECEIPTS,
   RENT_A_CAR,
   GO_OUT;
 
@@ -17,6 +18,7 @@ public enum ClientAction {
       case "SHOW_CARS_BY_CLASS" -> SHOW_CARS_BY_CLASS;
       case "SORT_CARS_BY_PRICE" -> SORT_CARS_BY_PRICE;
       case "SORT_CARS_BY_NAME" -> SORT_CARS_BY_NAME;
+      case "SHOW_MY_RECEIPTS" -> SHOW_MY_RECEIPTS;
       case "RENT_A_CAR" -> RENT_A_CAR;
       default -> GO_OUT;
     };

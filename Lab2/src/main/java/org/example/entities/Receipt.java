@@ -37,4 +37,19 @@ public class Receipt {
     this.totalPrice = totalPrice;
     this.fulfilled = fulfilled;
   }
+
+  @Override
+  public String toString() {
+    return String.format("""
+              Here is your Receipt.
+              first name  : %s,
+              last name   : %s,
+              car name    : %s,
+              car model   : %s,
+              for days    : %d,
+              driver need : %b,
+              total price : %d$
+            """, user.getFirstName(), user.getLastName(), car.getName(), car.getMark().getName(),
+        daysNumber, driverNeeded, totalPrice );
+  }
 }

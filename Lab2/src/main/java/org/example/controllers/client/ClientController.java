@@ -30,6 +30,7 @@ public class ClientController {
       case SHOW_CARS_BY_CLASS -> getCarsByClass();
       case SORT_CARS_BY_PRICE -> sortCarsByPrice();
       case SORT_CARS_BY_NAME -> sortCarsByName();
+      case SHOW_MY_RECEIPTS -> showMyReceipts();
       case RENT_A_CAR -> rentACar();
     }
   }
@@ -63,16 +64,28 @@ public class ClientController {
 
   protected AbstractReceiptEntity applyAdditions(AbstractReceiptEntity receiptEntity,
       Receipt receipt) {
-    int daysRent = clientView.getDaysRent();
-    receiptEntity = new DaysRentAddition(receiptEntity, daysRent);
-    receipt.setDaysNumber(daysRent);
 
     boolean needDriver = clientView.needDriver();
     receipt.setDriverNeeded(needDriver);
     if (needDriver) {
       receiptEntity = new DriverAddition(receiptEntity);
     }
+
+    int daysRent = clientView.getDaysRent();
+    receiptEntity = new DaysRentAddition(receiptEntity, daysRent);
+    receipt.setDaysNumber(daysRent);
     return receiptEntity;
+  }
+
+
+  private void showMyReceipts() {
+    try {
+      User user = SecurityContext.getContext().getSubject();
+      List<Receipt> allMyReceipts = receiptService.getAllMyReceipts(user);
+      clientView.printReceipts("Here are all your receipts: ", allMyReceipts);
+    } catch (DatabaseException e) {
+      System.out.println("Ooops, 'show all user`s receipts' operation failed due to some issue.");
+    }
   }
 
   private void sortCarsByName() {

@@ -26,6 +26,9 @@ public class ClientView {
 
   public void printCars(String message, List<Car> cars) {
     printMessage(message);
+    if(cars.size() == 0){
+      printMessage("No such elements");
+    }
     cars.forEach(System.out::println);
   }
 
@@ -64,12 +67,20 @@ public class ClientView {
     scanner.nextLine();
     printMessage("Do you need a driver? Write YES or NO: ");
     String driverNeeded = scanner.nextLine();
-    return driverNeeded.equals("YES");
+    return driverNeeded.equalsIgnoreCase("YES");
   }
 
   public void printReceipt(Receipt receipt) {
     printMessage("Grats! You have successfully created a receipt!");
     printMessage("Now you are able to see its status by calling appropriate command in menu.");
     printMessage(receipt);
+  }
+
+  public void printReceipts(String message, List<Receipt> receipts) {
+    printMessage(message);
+    if(receipts.size() == 0){
+      printMessage("No such elements");
+    }
+    receipts.forEach(System.out::println);
   }
 }

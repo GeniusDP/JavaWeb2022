@@ -12,7 +12,7 @@ public class MainView {
 
   public boolean askForRepeat() {
     System.out.println("Go to menu another one time? Write YES of NO.");
-    return scanner.nextLine().equals("YES");
+    return scanner.nextLine().equalsIgnoreCase("YES");
   }
 
 }

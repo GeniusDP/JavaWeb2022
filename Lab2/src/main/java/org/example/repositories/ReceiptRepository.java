@@ -13,6 +13,9 @@ public class ReceiptRepository implements CrudRepository<Receipt, Long> {
   private final ReceiptSpecificDao receiptSpecificDao;
 
   public List<Receipt> getReceiptsOfUserByUserId(Long userId) {
+    if(userId == null){
+      throw new IllegalArgumentException("user id must not be null");
+    }
     return receiptSpecificDao.getReceiptsOfUserByUserId(userId);
   }
 
