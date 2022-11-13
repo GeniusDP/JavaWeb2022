@@ -1,6 +1,7 @@
 package org.example.controllers.registerlogin;
 
 import lombok.RequiredArgsConstructor;
+import org.example.exceptions.DatabaseException;
 import org.example.services.RegisterLoginService;
 import org.example.views.registerlogin.RegisterLoginView;
 
@@ -12,10 +13,15 @@ public class RegisterLoginController {
 
   public boolean perform() {
     LoginRegisterAction action = registerLoginView.chooseLoginOrRegister();
-    if (action == LoginRegisterAction.LOGIN) {
-      return login();
+    try {
+      if (action == LoginRegisterAction.LOGIN) {
+        return login();
+      }
+      return register();
+    } catch (DatabaseException e) {
+      System.out.println("Ooops, operation failed due to some issue.");
+      return false;
     }
-    return register();
   }
 
   private boolean login() {
