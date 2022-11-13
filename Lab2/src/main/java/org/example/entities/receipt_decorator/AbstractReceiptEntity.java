@@ -1,4 +1,4 @@
-package org.example.entities.receipt;
+package org.example.entities.receipt_decorator;
 
 import org.example.entities.Car;
 import org.example.entities.User;

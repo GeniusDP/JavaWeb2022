@@ -1,4 +1,4 @@
-package org.example.entities.receipt;
+package org.example.entities.receipt_decorator;
 
 public class DriverAddition extends AbstractReceiptEntity {
   private final static int DRIVER_ADDITION_PRICE = 500;

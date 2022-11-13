@@ -1,4 +1,4 @@
-package org.example.entities.receipt;
+package org.example.entities.receipt_decorator;
 
 public class DaysRentAddition extends AbstractReceiptEntity {
 
