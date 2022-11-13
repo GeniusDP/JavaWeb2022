@@ -15,7 +15,8 @@ public class Receipt {
 
   private Car car;
 
-  private Boolean declined;
+  @Builder.Default
+  private Boolean declined = false;
 
   private Boolean driverNeeded;
 
@@ -23,13 +24,17 @@ public class Receipt {
 
   private Integer totalPrice;
 
+  @Builder.Default
+  private Boolean fulfilled = false;
+
   public Receipt(User user, Car car, Boolean declined, Boolean driverNeeded, Integer daysNumber,
-      Integer totalPrice) {
+      Integer totalPrice, Boolean fulfilled) {
     this.user = user;
     this.car = car;
     this.declined = declined;
     this.driverNeeded = driverNeeded;
     this.daysNumber = daysNumber;
     this.totalPrice = totalPrice;
+    this.fulfilled = fulfilled;
   }
 }
