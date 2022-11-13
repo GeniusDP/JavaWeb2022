@@ -6,6 +6,7 @@ import org.example.entities.Car;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import org.example.entities.Receipt;
 
 public class ClientView {
 
@@ -42,7 +43,7 @@ public class ClientView {
     System.out.println(message);
   }
 
-  public void printMessage(Object value) {
+  private void printMessage(Object value) {
     printMessage(value.toString());
   }
 
@@ -60,8 +61,15 @@ public class ClientView {
   }
 
   public boolean needDriver() {
+    scanner.nextLine();
     printMessage("Do you need a driver? Write YES or NO: ");
-    String driverNeeded =
+    String driverNeeded = scanner.nextLine();
+    return driverNeeded.equals("YES");
+  }
 
+  public void printReceipt(Receipt receipt) {
+    printMessage("Grats! You have successfully created a receipt!");
+    printMessage("Now you are able to see its status by calling appropriate command in menu.");
+    printMessage(receipt);
   }
 }

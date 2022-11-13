@@ -2,11 +2,12 @@ package org.example.controllers.client;
 
 import lombok.RequiredArgsConstructor;
 import org.example.entities.Car;
+import org.example.entities.Receipt;
 import org.example.entities.User;
 import org.example.entities.receipt.*;
-import org.example.entities.receipt.ReceiptPriceBuilder;
 import org.example.security.SecurityContext;
 import org.example.services.CarsService;
+import org.example.services.ReceiptService;
 import org.example.views.client.ClientView;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class ClientController {
 
   private final ClientView clientView;
   private final CarsService carsService;
+  private final ReceiptService receiptService;
 
   public void start() {
     ClientAction action = clientView.chooseAction();
@@ -30,32 +32,38 @@ public class ClientController {
 
 
   //template method + decorator
-  protected void rentACar() {
+  private void rentACar() {
     long carId = clientView.getCarId();
     if (carsService.existsById(carId)) {
       Car car = carsService.getCarById(carId);
       User user = SecurityContext.getContext().getSubject();
+      Receipt receipt = Receipt.builder().car(car).user(user).build();
 
-      AbstractReceiptEntity receipt = new BasicReceipt(car, user);
+      AbstractReceiptEntity receiptEntity = new BasicReceipt(car, user);
 
-      receipt = applyAdditions(receipt);
+      receiptEntity = applyAdditions(receiptEntity, receipt);
 
-      receipt = new Receipt(receipt);
-      //do something with receipt
+      ReceiptEntity resultReceiptEntity = new ReceiptEntity(receiptEntity);
+      receipt.setTotalPrice(resultReceiptEntity.getTotalPrice());
+      receiptService.registerReceipt(receipt);
+      clientView.printReceipt(receipt);
     } else {
       clientView.printNoCarWithSuchIdFound();
     }
 
   }
 
-  protected AbstractReceiptEntity applyAdditions(AbstractReceiptEntity receipt) {
+  protected AbstractReceiptEntity applyAdditions(AbstractReceiptEntity receiptEntity, Receipt receipt) {
     int daysRent = clientView.getDaysRent();
-    receipt = new DaysRentAddition(receipt, daysRent);
+    receiptEntity = new DaysRentAddition(receiptEntity, daysRent);
+    receipt.setDaysNumber(daysRent);
 
-    if(clientView.needDriver()){
-      receipt = new DriverAddition(receipt);
+    boolean needDriver = clientView.needDriver();
+    receipt.setDriverNeeded(needDriver);
+    if(needDriver){
+      receiptEntity = new DriverAddition(receiptEntity);
     }
-    return receipt;
+    return receiptEntity;
   }
 
   private void sortCarsByName() {

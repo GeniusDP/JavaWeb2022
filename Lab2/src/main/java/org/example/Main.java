@@ -3,9 +3,11 @@ package org.example;
 import org.example.controllers.main.Controller;
 import org.example.repositories.CarRepository;
 import org.example.repositories.MarkRepository;
+import org.example.repositories.ReceiptRepository;
 import org.example.repositories.UserRepository;
 import org.example.repositories.dao.cruddao.CrudCarDao;
 import org.example.repositories.dao.cruddao.CrudMarkDao;
+import org.example.repositories.dao.cruddao.CrudReceiptDao;
 import org.example.repositories.dao.cruddao.CrudUserDao;
 import org.example.repositories.dao.specificdao.*;
 import org.example.repositories.dbutils.ConnectionPool;
@@ -45,10 +47,15 @@ public class Main {
     CarRepository carRepository;
     UserRepository userRepository;
     UserSpecificDao userSpecificDao;
+    ReceiptSpecificDao receiptSpecificDao;
+    CrudReceiptDao crudReceiptDao;
+    ReceiptRepository receiptRepository;
     MainView mainView;
 
     crudCarDao = new CrudCarDao(connectionPool);
     crudMarkDao = new CrudMarkDao(connectionPool);
+    crudReceiptDao = new CrudReceiptDao(connectionPool);
+
     userDao = new CrudUserDao(connectionPool);
     markSpecificDao = new MarkSpecificDaoImpl(connectionPool);
     carSpecificDao = new CarSpecificDaoImpl(connectionPool);
@@ -58,7 +65,9 @@ public class Main {
     markRepository = new MarkRepository(crudMarkDao, markSpecificDao);
     carRepository = new CarRepository(crudCarDao, markRepository, carSpecificDao);
     userRepository = new UserRepository(userDao, userSpecificDao);
-    Controller controller = new Controller(carRepository, markRepository, userRepository, mainView);
+    receiptSpecificDao = new ReceiptSpecificDao(connectionPool, userRepository, carRepository);
+    receiptRepository = new ReceiptRepository(crudReceiptDao, receiptSpecificDao);
+    Controller controller = new Controller(carRepository, markRepository, userRepository, receiptRepository, mainView);
     controller.start();
   }
 }

@@ -1,10 +1,10 @@
 package org.example.entities.receipt;
 
-public class Receipt extends AbstractReceiptEntity {
+public class ReceiptEntity extends AbstractReceiptEntity {
 
   private final AbstractReceiptEntity receiptPriceBuilder;
 
-  public Receipt(AbstractReceiptEntity receiptPriceBuilder) {
+  public ReceiptEntity(AbstractReceiptEntity receiptPriceBuilder) {
     super(receiptPriceBuilder.car, receiptPriceBuilder.user);
     this.receiptPriceBuilder = receiptPriceBuilder;
   }

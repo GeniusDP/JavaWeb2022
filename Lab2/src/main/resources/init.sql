@@ -1,4 +1,4 @@
-drop table if exists lab_java.cars, lab_java.marks, lab_java.car_users cascade;
+drop table if exists lab_java.cars, lab_java.marks, lab_java.car_users, lab_java.receipts cascade;
 
 
 create table lab_java.marks
@@ -56,3 +56,15 @@ create table lab_java.car_users
 
 insert into lab_java.car_users (username, password, first_name, last_name, role)
 values ('admin', 'admin', 'admin', 'admin', 'ADMIN'), ('client', 'client', 'client', 'client', 'CLIENT');
+
+
+create table lab_java.receipts
+(
+    id bigserial primary key,
+    user_id bigint not null references lab_java.car_users(id),
+    car_id bigint not null references lab_java.cars(id),
+    declined boolean not null default false,
+    driver_needed boolean not null ,
+    days_number int not null default 1,
+    total_price int not null
+);

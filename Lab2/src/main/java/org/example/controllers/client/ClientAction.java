@@ -6,19 +6,19 @@ public enum ClientAction {
   SORT_CARS_BY_PRICE,
   SORT_CARS_BY_NAME,
   RENT_A_CAR,
-  LOG_OUT;
+  GO_OUT;
 
-  public static ClientAction getAction(String value){
-    if(value == null){
+  public static ClientAction getAction(String value) {
+    if (value == null) {
       return null;
     }
-    return switch (value){
+    return switch (value) {
       case "SHOW_CARS_BY_MARK" -> SHOW_CARS_BY_MARK;
       case "SHOW_CARS_BY_CLASS" -> SHOW_CARS_BY_CLASS;
       case "SORT_CARS_BY_PRICE" -> SORT_CARS_BY_PRICE;
       case "SORT_CARS_BY_NAME" -> SORT_CARS_BY_NAME;
       case "RENT_A_CAR" -> RENT_A_CAR;
-      default -> LOG_OUT;
+      default -> GO_OUT;
     };
   }
 }
