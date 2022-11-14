@@ -55,7 +55,8 @@ create table lab_java.car_users
 );
 
 insert into lab_java.car_users (username, password, first_name, last_name, role)
-values ('admin', 'admin', 'admin', 'admin', 'ADMIN'), ('client', 'client', 'client', 'client', 'CLIENT');
+values ('admin', 'admin', 'admin', 'admin', 'ADMIN'), ('client', 'client', 'client', 'client', 'CLIENT'),
+       ('manager', 'manager', 'manager', 'manager', 'MANAGER');
 
 
 create table lab_java.receipts

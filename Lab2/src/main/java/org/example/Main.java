@@ -66,7 +66,7 @@ public class Main {
     carRepository = new CarRepository(crudCarDao, markRepository, carSpecificDao);
     userRepository = new UserRepository(userDao, userSpecificDao);
     receiptSpecificDao = new ReceiptSpecificDao(connectionPool, userRepository, carRepository);
-    receiptRepository = new ReceiptRepository(crudReceiptDao, receiptSpecificDao);
+    receiptRepository = new ReceiptRepository(crudReceiptDao, receiptSpecificDao, carRepository, userRepository);
     Controller controller = new Controller(carRepository, markRepository, userRepository, receiptRepository, mainView);
     controller.start();
   }

@@ -85,7 +85,7 @@ public class ClientController {
   private void showMyReceipts() {
     try {
       User user = SecurityContext.getContext().getSubject();
-      List<Receipt> allMyReceipts = receiptService.getAllMyReceipts(user);
+      List<Receipt> allMyReceipts = receiptService.getMyReceipts(user);
       clientView.printReceipts("Here are all your receipts: ", allMyReceipts);
     } catch (DatabaseException e) {
       System.out.println("Ooops, 'show all user`s receipts' operation failed due to some issue.");

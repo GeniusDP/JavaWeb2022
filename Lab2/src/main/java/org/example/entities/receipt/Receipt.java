@@ -32,6 +32,7 @@ public class Receipt {
   public String toString() {
     return String.format("""
               Here is your Receipt.
+              unique id   : %d,
               first name  : %s,
               last name   : %s,
               car name    : %s,
@@ -40,7 +41,7 @@ public class Receipt {
               driver need : %b,
               status      : %s,
               total price : %d$
-            """, user.getFirstName(), user.getLastName(), car.getName(), car.getMark().getName(),
+            """, this.id, user.getFirstName(), user.getLastName(), car.getName(), car.getMark().getName(),
         daysNumber, driverNeeded, status.name(), totalPrice );
   }
 }

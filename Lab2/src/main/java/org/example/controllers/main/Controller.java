@@ -2,6 +2,7 @@ package org.example.controllers.main;
 
 import lombok.RequiredArgsConstructor;
 import org.example.controllers.client.ClientController;
+import org.example.controllers.manager.ManagerController;
 import org.example.controllers.registerlogin.RegisterLoginController;
 import org.example.repositories.CarRepository;
 import org.example.repositories.MarkRepository;
@@ -13,6 +14,7 @@ import org.example.services.ReceiptService;
 import org.example.services.RegisterLoginService;
 import org.example.views.client.ClientView;
 import org.example.views.main.MainView;
+import org.example.views.manager.ManagerView;
 import org.example.views.registerlogin.RegisterLoginView;
 
 @RequiredArgsConstructor
@@ -41,7 +43,11 @@ public class Controller {
   }
 
   private void actAsManager() {
-
+    ManagerController managerController = new ManagerController(
+        new ManagerView(),
+        new ReceiptService(receiptRepository)
+    );
+    managerController.start();
   }
 
   private void actAsClient() {

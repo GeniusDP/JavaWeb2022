@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.example.entities.car.Car;
 import org.example.entities.receipt.Receipt;
+import org.example.entities.receipt.ReceiptStatus;
 import org.example.entities.user.User;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.CarRepository;
@@ -77,6 +78,105 @@ public class ReceiptSpecificDao {
       PreparedStatement statement = connection.prepareStatement(sql);
       return extractList(statement);
     } catch (SQLException e) {
+      throw new DatabaseException(e);
+    } finally {
+      connectionPool.putBack(connection);
+    }
+  }
+
+  public boolean setStatus(long receiptId, ReceiptStatus status) {
+    Connection connection = connectionPool.getConnection();
+
+    String sql = """
+        update lab_java.receipts set status = ? where id = ?;
+        """;
+    try {
+      PreparedStatement statement = connection.prepareStatement(sql);
+      statement.setString(1, status.name());
+      statement.setLong(2, receiptId);
+      return statement.executeUpdate() == 1;
+    } catch (SQLException e) {
+      throw new DatabaseException(e);
+    } finally {
+      connectionPool.putBack(connection);
+    }
+  }
+
+
+  public boolean declineReceipt(long receiptId, String message) {
+    Connection connection = connectionPool.getConnection();
+
+    String setStatusSql = """
+        update lab_java.receipts set status = ? where id = ?;
+        """;
+
+    String addMessage = """
+        update lab_java.receipts set decline_message = ? where id = ?;
+        """;
+
+    try {
+      connection.setAutoCommit(false);
+
+      //Transaction
+      PreparedStatement statementStatus = connection.prepareStatement(setStatusSql);
+      statementStatus.setString(1, ReceiptStatus.DECLINED.name());
+      statementStatus.setLong(2, receiptId);
+      statementStatus.executeUpdate();
+
+      PreparedStatement statementMessage = connection.prepareStatement(addMessage);
+      statementMessage.setString(1, message);
+      statementMessage.setLong(2, receiptId);
+      statementMessage.executeUpdate();
+
+      connection.commit();
+      connection.setAutoCommit(true);
+      return true;
+    } catch (SQLException e) {
+      try {
+        connection.rollback();
+      } catch (SQLException ex) {
+        throw new DatabaseException(e);
+      }
+      throw new DatabaseException(e);
+    } finally {
+      connectionPool.putBack(connection);
+    }
+  }
+
+  public boolean returnDamagedCar(long receiptId, int resultPrice) {
+    Connection connection = connectionPool.getConnection();
+
+    String setStatusSql = """
+        update lab_java.receipts set status = ? where id = ?;
+        """;
+
+    String addMessage = """
+        update lab_java.receipts set total_price = ? where id = ?;
+        """;
+
+    try {
+      connection.setAutoCommit(false);
+
+      //Transaction
+      PreparedStatement statementStatus = connection.prepareStatement(setStatusSql);
+      statementStatus.setString(1, ReceiptStatus.RETURNED_WITH_DAMAGE.name());
+      statementStatus.setLong(2, receiptId);
+      statementStatus.executeUpdate();
+
+      PreparedStatement statementMessage = connection.prepareStatement(addMessage);
+      statementMessage.setInt(1, resultPrice);
+      statementMessage.setLong(2, receiptId);
+      statementMessage.executeUpdate();
+
+      connection.commit();
+      connection.setAutoCommit(true);
+      return true;
+    } catch (SQLException e) {
+      try {
+        connection.rollback();
+      } catch (SQLException ex) {
+        throw new DatabaseException(e);
+      }
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
