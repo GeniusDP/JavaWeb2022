@@ -63,8 +63,8 @@ create table lab_java.receipts
     id bigserial primary key,
     user_id bigint not null references lab_java.car_users(id),
     car_id bigint not null references lab_java.cars(id),
-    declined boolean not null default false,
-    fulfilled boolean not null default false,
+    decline_message text,
+    status text not null default 'REGISTERED',
     driver_needed boolean not null ,
     days_number int not null default 1,
     total_price int not null

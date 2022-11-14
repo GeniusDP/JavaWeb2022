@@ -1,6 +1,6 @@
 package org.example.repositories.dao.cruddao;
 
-import org.example.entities.User;
+import org.example.entities.user.User;
 import org.example.repositories.dao.extractors.Extractor;
 import org.example.repositories.dao.extractors.UserExtractor;
 import org.example.repositories.dbutils.ConnectionPool;

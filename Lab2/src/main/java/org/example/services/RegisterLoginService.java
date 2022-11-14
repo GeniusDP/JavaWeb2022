@@ -1,8 +1,8 @@
 package org.example.services;
 
 import lombok.RequiredArgsConstructor;
-import org.example.entities.Role;
-import org.example.entities.User;
+import org.example.entities.user.Role;
+import org.example.entities.user.User;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.UserRepository;
 import org.example.security.SecurityContext;

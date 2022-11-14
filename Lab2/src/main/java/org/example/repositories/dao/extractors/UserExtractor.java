@@ -1,9 +1,9 @@
 package org.example.repositories.dao.extractors;
 
-import org.example.entities.*;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.example.entities.user.Role;
+import org.example.entities.user.User;
 
 public class UserExtractor implements Extractor<User> {
 

@@ -3,7 +3,11 @@ package org.example.repositories.dao;
 
 import java.util.List;
 
-import org.example.entities.*;
+import org.example.entities.car.Car;
+import org.example.entities.car.Mark;
+import org.example.entities.car.QualityClass;
+import org.example.entities.user.Role;
+import org.example.entities.user.User;
 import org.example.repositories.CarRepository;
 import org.example.repositories.CrudRepository;
 import org.example.repositories.MarkRepository;

@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import org.example.entities.Mark;
+import org.example.entities.car.Mark;
 import org.example.repositories.dao.extractors.Extractor;
 import org.example.repositories.dao.extractors.MarkExtractor;
 import org.example.repositories.dbutils.ConnectionPool;

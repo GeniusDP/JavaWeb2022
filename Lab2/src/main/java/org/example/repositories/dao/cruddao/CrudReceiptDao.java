@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import org.example.entities.Receipt;
+import org.example.entities.receipt.Receipt;
 import org.example.repositories.dao.extractors.Extractor;
 import org.example.repositories.dao.extractors.ReceiptExtractor;
 import org.example.repositories.dbutils.ConnectionPool;

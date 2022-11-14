@@ -1,11 +1,8 @@
 package org.example.repositories.dao.specificdao;
 
-import lombok.RequiredArgsConstructor;
-import org.example.entities.Mark;
-import org.example.entities.User;
+import org.example.entities.user.User;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.dao.extractors.Extractor;
-import org.example.repositories.dao.extractors.MarkExtractor;
 import org.example.repositories.dao.extractors.UserExtractor;
 import org.example.repositories.dbutils.ConnectionPool;
 

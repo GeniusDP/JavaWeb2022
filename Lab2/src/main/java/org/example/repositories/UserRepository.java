@@ -1,7 +1,7 @@
 package org.example.repositories;
 
 import lombok.AllArgsConstructor;
-import org.example.entities.User;
+import org.example.entities.user.User;
 import org.example.repositories.dao.cruddao.CrudUserDao;
 import org.example.repositories.dao.specificdao.UserSpecificDao;
 

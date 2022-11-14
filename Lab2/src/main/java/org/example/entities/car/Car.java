@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.entities.car;
 
 import lombok.Builder;
 import lombok.Data;

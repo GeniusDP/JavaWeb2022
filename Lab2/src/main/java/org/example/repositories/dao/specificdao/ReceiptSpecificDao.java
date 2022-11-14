@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.example.entities.Car;
-import org.example.entities.Receipt;
-import org.example.entities.User;
+import org.example.entities.car.Car;
+import org.example.entities.receipt.Receipt;
+import org.example.entities.user.User;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.CarRepository;
 import org.example.repositories.UserRepository;
@@ -49,6 +49,40 @@ public class ReceiptSpecificDao {
     }
   }
 
+  public List<Receipt> getReturnedAndDeclinedReceipts() {
+    Connection connection = connectionPool.getConnection();
+
+    String sql = """
+        select * from lab_java.receipts where status
+          IN ('DECLINED', 'RETURNED', 'RETURNED_WITH_DAMAGE');
+        """;
+    try {
+      PreparedStatement statement = connection.prepareStatement(sql);
+      return extractList(statement);
+    } catch (SQLException e) {
+      throw new DatabaseException(e);
+    } finally {
+      connectionPool.putBack(connection);
+    }
+  }
+
+
+  public List<Receipt> getRegisteredOrAcceptedReceipts() {
+    Connection connection = connectionPool.getConnection();
+
+    String sql = """
+        select * from lab_java.receipts where status IN ('REGISTERED', 'ACCEPTED');
+        """;
+    try {
+      PreparedStatement statement = connection.prepareStatement(sql);
+      return extractList(statement);
+    } catch (SQLException e) {
+      throw new DatabaseException(e);
+    } finally {
+      connectionPool.putBack(connection);
+    }
+  }
+
 
   private List<Receipt> extractList(PreparedStatement statement) throws SQLException {
     List<Receipt> receipts = new ArrayList<>();
@@ -67,4 +101,6 @@ public class ReceiptSpecificDao {
       }
     }).collect(Collectors.toList());
   }
+
+
 }

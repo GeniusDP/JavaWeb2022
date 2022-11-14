@@ -3,9 +3,9 @@ package org.example.repositories;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.example.entities.Car;
-import org.example.entities.Mark;
-import org.example.entities.QualityClass;
+import org.example.entities.car.Car;
+import org.example.entities.car.Mark;
+import org.example.entities.car.QualityClass;
 import org.example.repositories.dao.cruddao.CrudDao;
 import org.example.repositories.dao.specificdao.CarSpecificDao;
 

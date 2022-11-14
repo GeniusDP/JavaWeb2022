@@ -1,6 +1,6 @@
 package org.example.repositories.dao.specificdao;
 
-import org.example.entities.User;
+import org.example.entities.user.User;
 
 public interface UserSpecificDao {
 

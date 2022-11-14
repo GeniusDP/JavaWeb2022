@@ -1,9 +1,11 @@
 package org.example.services;
 
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.example.entities.Receipt;
-import org.example.entities.User;
+import org.example.entities.car.Car;
+import org.example.entities.receipt.Receipt;
+import org.example.entities.user.User;
 import org.example.repositories.ReceiptRepository;
 
 @RequiredArgsConstructor
@@ -17,5 +19,11 @@ public class ReceiptService {
 
   public List<Receipt> getAllMyReceipts(User user) {
     return receiptRepository.getReceiptsOfUserByUserId(user.getId());
+  }
+
+  public boolean carIsAvailable(long carId) {
+    List<Car> allUnavailableCars = receiptRepository.getAllUnavailableCars();
+    Optional<Car> any = allUnavailableCars.stream().filter(car -> car.getId() == carId).findAny();
+    return any.isEmpty();
   }
 }

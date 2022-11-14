@@ -2,9 +2,9 @@ package org.example.repositories.dao.extractors;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.example.entities.Car;
-import org.example.entities.Mark;
-import org.example.entities.QualityClass;
+import org.example.entities.car.Car;
+import org.example.entities.car.Mark;
+import org.example.entities.car.QualityClass;
 
 public class CarExtractor implements Extractor<Car> {
 

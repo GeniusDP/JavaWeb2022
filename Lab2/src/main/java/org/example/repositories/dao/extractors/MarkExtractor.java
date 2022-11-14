@@ -2,7 +2,7 @@ package org.example.repositories.dao.extractors;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.example.entities.Mark;
+import org.example.entities.car.Mark;
 
 public class MarkExtractor implements Extractor<Mark> {
 

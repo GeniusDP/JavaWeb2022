@@ -1,6 +1,6 @@
 package org.example.repositories.dao.specificdao;
 
-import org.example.entities.Mark;
+import org.example.entities.car.Mark;
 
 public interface MarkSpecificDao {
 

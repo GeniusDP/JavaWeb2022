@@ -1,7 +1,7 @@
 package org.example.entities.receipt_decorator;
 
-import org.example.entities.Car;
-import org.example.entities.User;
+import org.example.entities.car.Car;
+import org.example.entities.user.User;
 
 public class BasicReceipt extends AbstractReceiptEntity {
 

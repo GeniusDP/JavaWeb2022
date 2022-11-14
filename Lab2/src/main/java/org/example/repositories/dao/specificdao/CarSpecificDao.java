@@ -1,8 +1,8 @@
 package org.example.repositories.dao.specificdao;
 
 import java.util.List;
-import org.example.entities.Car;
-import org.example.entities.QualityClass;
+import org.example.entities.car.Car;
+import org.example.entities.car.QualityClass;
 
 public interface CarSpecificDao {
 

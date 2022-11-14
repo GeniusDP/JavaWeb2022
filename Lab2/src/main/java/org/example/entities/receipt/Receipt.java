@@ -1,8 +1,10 @@
-package org.example.entities;
+package org.example.entities.receipt;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.example.entities.car.Car;
+import org.example.entities.user.User;
 
 @Data
 @Builder
@@ -16,7 +18,7 @@ public class Receipt {
   private Car car;
 
   @Builder.Default
-  private Boolean declined = false;
+  private ReceiptStatus status = ReceiptStatus.REGISTERED;
 
   private Boolean driverNeeded;
 
@@ -24,19 +26,7 @@ public class Receipt {
 
   private Integer totalPrice;
 
-  @Builder.Default
-  private Boolean fulfilled = false;
-
-  public Receipt(User user, Car car, Boolean declined, Boolean driverNeeded, Integer daysNumber,
-      Integer totalPrice, Boolean fulfilled) {
-    this.user = user;
-    this.car = car;
-    this.declined = declined;
-    this.driverNeeded = driverNeeded;
-    this.daysNumber = daysNumber;
-    this.totalPrice = totalPrice;
-    this.fulfilled = fulfilled;
-  }
+  private String declineMessage;
 
   @Override
   public String toString() {
@@ -48,8 +38,9 @@ public class Receipt {
               car model   : %s,
               for days    : %d,
               driver need : %b,
+              status      : %s,
               total price : %d$
             """, user.getFirstName(), user.getLastName(), car.getName(), car.getMark().getName(),
-        daysNumber, driverNeeded, totalPrice );
+        daysNumber, driverNeeded, status.name(), totalPrice );
   }
 }

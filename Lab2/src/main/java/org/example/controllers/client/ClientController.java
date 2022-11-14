@@ -2,9 +2,9 @@ package org.example.controllers.client;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.example.entities.Car;
-import org.example.entities.Receipt;
-import org.example.entities.User;
+import org.example.entities.car.Car;
+import org.example.entities.receipt.Receipt;
+import org.example.entities.user.User;
 import org.example.entities.receipt_decorator.AbstractReceiptEntity;
 import org.example.entities.receipt_decorator.BasicReceipt;
 import org.example.entities.receipt_decorator.DaysRentAddition;
@@ -41,18 +41,22 @@ public class ClientController {
     try {
       long carId = clientView.getCarId();
       if (carsService.existsById(carId)) {
-        Car car = carsService.getCarById(carId);
-        User user = SecurityContext.getContext().getSubject();
-        Receipt receipt = Receipt.builder().car(car).user(user).build();
+        if(receiptService.carIsAvailable(carId)) {
+          Car car = carsService.getCarById(carId);
+          User user = SecurityContext.getContext().getSubject();
+          Receipt receipt = Receipt.builder().car(car).user(user).build();
 
-        AbstractReceiptEntity receiptEntity = new BasicReceipt(car, user);
+          AbstractReceiptEntity receiptEntity = new BasicReceipt(car, user);
 
-        receiptEntity = applyAdditions(receiptEntity, receipt);
+          receiptEntity = applyAdditions(receiptEntity, receipt);
 
-        ReceiptEntity resultReceiptEntity = new ReceiptEntity(receiptEntity);
-        receipt.setTotalPrice(resultReceiptEntity.getTotalPrice());
-        receiptService.registerReceipt(receipt);
-        clientView.printReceipt(receipt);
+          ReceiptEntity resultReceiptEntity = new ReceiptEntity(receiptEntity);
+          receipt.setTotalPrice(resultReceiptEntity.getTotalPrice());
+          receiptService.registerReceipt(receipt);
+          clientView.printReceipt(receipt);
+        } else {
+          clientView.printCarIsNotAvailable();
+        }
       } else {
         clientView.printNoCarWithSuchIdFound();
       }

@@ -1,12 +1,12 @@
 package org.example.views.client;
 
 import org.example.controllers.client.ClientAction;
-import org.example.entities.Car;
+import org.example.entities.car.Car;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import org.example.entities.Receipt;
+import org.example.entities.receipt.Receipt;
 
 public class ClientView {
 
@@ -82,5 +82,9 @@ public class ClientView {
       printMessage("No such elements");
     }
     receipts.forEach(System.out::println);
+  }
+
+  public void printCarIsNotAvailable() {
+    printMessage("Sorry, but this car is not available just right now.");
   }
 }

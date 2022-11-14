@@ -1,8 +1,10 @@
 package org.example.repositories;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.example.entities.Receipt;
+import org.example.entities.car.Car;
+import org.example.entities.receipt.Receipt;
 import org.example.repositories.dao.cruddao.CrudReceiptDao;
 import org.example.repositories.dao.specificdao.ReceiptSpecificDao;
 
@@ -42,5 +44,10 @@ public class ReceiptRepository implements CrudRepository<Receipt, Long> {
   @Override
   public Receipt findById(Long key) {
     return crudReceiptDao.findById(key);
+  }
+
+  public List<Car> getAllUnavailableCars() {
+    List<Receipt> receipts = receiptSpecificDao.getRegisteredOrAcceptedReceipts();
+    return receipts.stream().map(Receipt::getCar).distinct().collect(Collectors.toList());
   }
 }

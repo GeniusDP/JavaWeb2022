@@ -2,6 +2,7 @@ package org.example.entities;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.example.entities.car.QualityClass;
 import org.junit.jupiter.api.Test;
 
 class QualityClassTest {

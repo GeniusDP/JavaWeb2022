@@ -1,6 +1,6 @@
 package org.example.security;
 
-import org.example.entities.User;
+import org.example.entities.user.User;
 
 public class SecurityContext {
 

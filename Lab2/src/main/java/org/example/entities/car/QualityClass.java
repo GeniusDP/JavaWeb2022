@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.entities.car;
 
 public enum QualityClass {
   BASIC,

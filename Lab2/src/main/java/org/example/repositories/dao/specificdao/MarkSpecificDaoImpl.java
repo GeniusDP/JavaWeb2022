@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.example.entities.Mark;
+import org.example.entities.car.Mark;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.dao.extractors.Extractor;
 import org.example.repositories.dao.extractors.MarkExtractor;

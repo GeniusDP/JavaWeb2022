@@ -1,8 +1,8 @@
 package org.example.services;
 
 import lombok.RequiredArgsConstructor;
-import org.example.entities.Car;
-import org.example.entities.QualityClass;
+import org.example.entities.car.Car;
+import org.example.entities.car.QualityClass;
 import org.example.repositories.CarRepository;
 
 import java.util.List;
