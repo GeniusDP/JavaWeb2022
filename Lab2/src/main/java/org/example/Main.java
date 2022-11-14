@@ -13,7 +13,6 @@ import org.example.repositories.dao.specificdao.*;
 import org.example.repositories.dbutils.ConnectionPool;
 import org.example.views.main.MainView;
 
-import java.sql.SQLException;
 /*
 В системі існує перелік Автомобілів, для якого необхідно реалізувати:
 - вибір по марці;
@@ -31,7 +30,7 @@ import java.sql.SQLException;
 - додавання, видалення автомобілів, редагування інформації про автомобілі;
 - блокування/розблокування користувачів;
 - реєстрація менеджерів в системі.
- */
+*/
 public class Main {
 
   public static void main(String[] args) {
