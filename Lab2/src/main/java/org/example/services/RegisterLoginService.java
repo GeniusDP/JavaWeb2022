@@ -23,20 +23,18 @@ public class RegisterLoginService {
     return loginResult;
   }
 
-  public boolean registerClient(String username, String password, String firstName, String lastName, Role role) {
+  public User registerUser(String username, String password, String firstName, String lastName, Role role) {
     try {
-      User user = User.builder()
+     User user = User.builder()
               .username(username)
               .password(password)
               .firstName(firstName)
               .lastName(lastName)
               .role(role)
               .build();
-      userRepository.insert(user);
-      SecurityContext.getContext().setCurrentUser(user);
+      return userRepository.insert(user);
     } catch (DatabaseException exception) {
-      return false;
+      return null;
     }
-    return true;
   }
 }
