@@ -16,7 +16,7 @@ public class RegisterLoginService {
 
   public boolean login(String username, String password) {
     User user = userRepository.findByUsername(username);
-    boolean loginResult = !(user == null) && Objects.equals(user.getPassword(), password);
+    boolean loginResult = !(user == null) && (!user.isBanned()) && Objects.equals(user.getPassword(), password);
     if (loginResult) {
       SecurityContext.getContext().setCurrentUser(user);
     }

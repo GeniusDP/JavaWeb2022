@@ -6,6 +6,7 @@ import org.example.entities.car.QualityClass;
 import org.example.repositories.CarRepository;
 
 import java.util.List;
+import org.example.repositories.dbutils.ConnectionPool;
 
 @RequiredArgsConstructor
 public class CarsService {
@@ -34,5 +35,17 @@ public class CarsService {
 
   public Car getCarById(long id) {
     return carRepository.findById(id);
+  }
+
+  public void removeCarById(long id) {
+    carRepository.delete(id);
+  }
+
+  public boolean existsByName(String name) {
+    return carRepository.findByName(name) != null;
+  }
+
+  public Car createCar(Car car){
+    return carRepository.insert(car);
   }
 }

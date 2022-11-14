@@ -13,4 +13,6 @@ public interface CarSpecificDao {
   List<Car> findAllByPriceOrdered();
 
   List<Car> findAllByNameOrdered();
+
+  Car findByName(String name);
 }

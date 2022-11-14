@@ -45,7 +45,13 @@ public class CrudUserDao extends AbstractCrudDao<User, Long> {
 
     @Override
     protected int deleteInternal(Long key, Connection connection) throws SQLException {
-        throw new IllegalArgumentException("not implemented method");
+        String sql = "delete from lab_java.car_users where id = ?;";
+        int rowsUpdated = 0;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, key);
+            rowsUpdated = statement.executeUpdate();
+        }
+        return rowsUpdated;
     }
 
     @Override

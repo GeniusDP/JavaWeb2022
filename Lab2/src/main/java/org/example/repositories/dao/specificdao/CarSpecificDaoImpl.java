@@ -103,6 +103,26 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
     }
   }
 
+  @Override
+  public Car findByName(String name) {
+    Connection connection = connectionPool.getConnection();
+
+    String sql = "select * from lab_java.cars where name = ?;";
+    try {
+      PreparedStatement statement = connection.prepareStatement(sql);
+      statement.setString(1, name);
+      ResultSet resultSet = statement.executeQuery();
+      if(resultSet.next()){
+        return carExtractor.extract(resultSet);
+      }
+      return null;
+    } catch (SQLException e) {
+      throw new DatabaseException(e);
+    } finally {
+      connectionPool.putBack(connection);
+    }
+  }
+
 
   private List<Car> extractList(PreparedStatement statement) throws SQLException {
     List<Car> cars = new ArrayList<>();

@@ -81,4 +81,7 @@ public class CarRepository implements CrudRepository<Car, Long> {
     return carSpecificDao.findAllByNameOrdered();
   }
 
+  public Car findByName(String name) {
+    return carSpecificDao.findByName(name);
+  }
 }

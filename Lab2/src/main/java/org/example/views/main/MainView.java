@@ -7,7 +7,7 @@ public class MainView {
   private final Scanner scanner = new Scanner(System.in);
 
   public void unauthorizedMessage() {
-    System.out.println("Bad input data: performing login/register operation was NOT SUCCESSFUL.");
+    System.out.println("Bad input data: performing login/register operation was NOT SUCCESSFUL. May be, you are banned.");
   }
 
   public boolean askForRepeat() {

@@ -6,9 +6,9 @@ public enum AdminAction {
   UNBAN_USER,
   CREATE_CAR,
   REMOVE_CAR,
-  CREATE_MARK,
-  REMOVE_MARK,
-  SHOW_ALL_MARKS,
+//  CREATE_MARK,
+//  REMOVE_MARK,
+//  SHOW_ALL_MARKS,
   SHOW_ALL_CARS,
   GO_OUT;
 
@@ -22,9 +22,9 @@ public enum AdminAction {
       case "UNBAN_USER" -> UNBAN_USER;
       case "CREATE_CAR" -> CREATE_CAR;
       case "REMOVE_CAR" -> REMOVE_CAR;
-      case "CREATE_MARK" -> CREATE_MARK;
-      case "REMOVE_MARK" -> REMOVE_MARK;
-      case "SHOW_ALL_MARKS" -> SHOW_ALL_MARKS;
+//      case "CREATE_MARK" -> CREATE_MARK;
+//      case "REMOVE_MARK" -> REMOVE_MARK;
+//      case "SHOW_ALL_MARKS" -> SHOW_ALL_MARKS;
       case "SHOW_ALL_CARS" -> SHOW_ALL_CARS;
       default -> GO_OUT;
     };

@@ -42,4 +42,7 @@ public class UserRepository implements CrudRepository<User, Long> {
         return userSpecificDao.findByUsername(username);
     }
 
+    public void setIsBanned(long id, boolean isBanned) {
+        userSpecificDao.setIsBanned(id, isBanned);
+    }
 }

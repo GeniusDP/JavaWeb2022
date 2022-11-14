@@ -11,8 +11,10 @@ import org.example.repositories.ReceiptRepository;
 import org.example.repositories.UserRepository;
 import org.example.security.SecurityContext;
 import org.example.services.CarsService;
+import org.example.services.MarkService;
 import org.example.services.ReceiptService;
 import org.example.services.RegisterLoginService;
+import org.example.services.UserService;
 import org.example.views.admin.AdminView;
 import org.example.views.client.ClientView;
 import org.example.views.main.MainView;
@@ -42,7 +44,11 @@ public class Controller {
 
   private void actAsAdmin() {
     AdminController adminController = new AdminController(
-        new AdminView()
+        new AdminView(),
+        new CarsService(carRepository),
+        new RegisterLoginService(userRepository),
+        new UserService(userRepository),
+        new MarkService(markRepository)
     );
     adminController.start();
   }
