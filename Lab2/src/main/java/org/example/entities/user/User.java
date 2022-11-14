@@ -21,6 +21,8 @@ public class User {
 
   private Role role;
 
+  private boolean isBanned;
+
   public User(String username, String password, String firstName, String lastName, Role role) {
     this.username = username;
     this.password = password;

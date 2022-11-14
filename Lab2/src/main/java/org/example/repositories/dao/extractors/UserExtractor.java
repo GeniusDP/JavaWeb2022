@@ -15,12 +15,14 @@ public class UserExtractor implements Extractor<User> {
         String firstName = rs.getString("first_name");
         String lastName = rs.getString("last_name");
         String role = rs.getString("role");
+        Boolean isBanned = rs.getObject("is_banned", Boolean.class);
         return User.builder()
                 .id(id)
                 .username(username)
                 .password(password)
                 .firstName(firstName)
                 .lastName(lastName)
+                .isBanned(isBanned)
                 .role(Role.getRole(role))
                 .build();
     }

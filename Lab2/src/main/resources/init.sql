@@ -51,7 +51,8 @@ create table lab_java.car_users
     password varchar(50) not null,
     first_name varchar(50) not null,
     last_name varchar(50) not null,
-    role varchar(15) not null
+    role varchar(15) not null,
+    is_banned boolean not null default false
 );
 
 insert into lab_java.car_users (username, password, first_name, last_name, role)
