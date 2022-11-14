@@ -1,6 +1,7 @@
 package org.example.controllers.main;
 
 import lombok.RequiredArgsConstructor;
+import org.example.controllers.admin.AdminController;
 import org.example.controllers.client.ClientController;
 import org.example.controllers.manager.ManagerController;
 import org.example.controllers.registerlogin.RegisterLoginController;
@@ -12,6 +13,7 @@ import org.example.security.SecurityContext;
 import org.example.services.CarsService;
 import org.example.services.ReceiptService;
 import org.example.services.RegisterLoginService;
+import org.example.views.admin.AdminView;
 import org.example.views.client.ClientView;
 import org.example.views.main.MainView;
 import org.example.views.manager.ManagerView;
@@ -39,7 +41,10 @@ public class Controller {
   }
 
   private void actAsAdmin() {
-
+    AdminController adminController = new AdminController(
+        new AdminView()
+    );
+    adminController.start();
   }
 
   private void actAsManager() {

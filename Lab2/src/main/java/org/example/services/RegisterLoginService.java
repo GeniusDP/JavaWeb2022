@@ -23,14 +23,14 @@ public class RegisterLoginService {
     return loginResult;
   }
 
-  public boolean registerClient(String username, String password, String firstName, String lastName) {
+  public boolean registerClient(String username, String password, String firstName, String lastName, Role role) {
     try {
       User user = User.builder()
               .username(username)
               .password(password)
               .firstName(firstName)
               .lastName(lastName)
-              .role(Role.CLIENT)
+              .role(role)
               .build();
       userRepository.insert(user);
       SecurityContext.getContext().setCurrentUser(user);

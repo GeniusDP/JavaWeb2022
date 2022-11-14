@@ -1,6 +1,7 @@
 package org.example.controllers.registerlogin;
 
 import lombok.RequiredArgsConstructor;
+import org.example.entities.user.Role;
 import org.example.exceptions.DatabaseException;
 import org.example.services.RegisterLoginService;
 import org.example.views.registerlogin.RegisterLoginView;
@@ -37,7 +38,7 @@ public class RegisterLoginController {
     String password = registerLoginView.getPassword();
     String firstName = registerLoginView.getFirstName();
     String lastName = registerLoginView.getLastName();
-    return registerLoginService.registerClient(username, password, firstName, lastName);
+    return registerLoginService.registerClient(username, password, firstName, lastName, Role.CLIENT);
   }
 
 }

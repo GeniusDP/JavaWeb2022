@@ -1,5 +1,9 @@
 package org.example;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 import org.example.controllers.main.Controller;
 import org.example.repositories.CarRepository;
 import org.example.repositories.MarkRepository;
@@ -33,8 +37,11 @@ import org.example.views.main.MainView;
 */
 public class Main {
 
-  public static void main(String[] args) {
-    String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=zaranik";
+  public static void main(String[] args) throws IOException {
+    Properties properties = new Properties();
+    properties.load(new FileReader("src/main/resources/application.properties"));
+
+    String url = properties.getProperty("database.url");
     ConnectionPool connectionPool = new ConnectionPool(url, "org.postgresql.Driver");
 
     CrudCarDao crudCarDao;
