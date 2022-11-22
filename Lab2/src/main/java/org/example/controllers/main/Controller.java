@@ -31,15 +31,18 @@ public class Controller {
   private final MainView mainView;
 
   public void start() {
-    authorize();
-    do {
-      switch (SecurityContext.getContext().getSubject().getRole()) {
-        case CLIENT -> actAsClient();
-        case MANAGER -> actAsManager();
-        case ADMIN -> actAsAdmin();
-      }
-    } while (mainView.askForRepeat());
-
+    while(true) {
+      authorize();
+      do {
+        switch (SecurityContext.getContext().getSubject().getRole()) {
+          case CLIENT -> actAsClient();
+          case MANAGER -> actAsManager();
+          case ADMIN -> actAsAdmin();
+        }
+      } while (mainView.askForRepeat());
+      mainView.loggedOut();
+      SecurityContext.getContext().clear();
+    }
   }
 
   private void actAsAdmin() {

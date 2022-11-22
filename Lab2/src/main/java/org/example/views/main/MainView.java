@@ -15,4 +15,7 @@ public class MainView {
     return scanner.nextLine().equalsIgnoreCase("YES");
   }
 
+  public void loggedOut() {
+    System.out.println("Logged out!");
+  }
 }

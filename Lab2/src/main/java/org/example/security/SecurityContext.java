@@ -30,4 +30,8 @@ public class SecurityContext {
   public User getSubject(){
     return user;
   }
+
+  public void clear() {
+    context = null;
+  }
 }
