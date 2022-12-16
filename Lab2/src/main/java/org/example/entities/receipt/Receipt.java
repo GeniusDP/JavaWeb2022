@@ -30,18 +30,9 @@ public class Receipt {
 
   @Override
   public String toString() {
-    return String.format("""
-              Here is your Receipt.
-              unique id   : %d,
-              first name  : %s,
-              last name   : %s,
-              car name    : %s,
-              car model   : %s,
-              for days    : %d,
-              driver need : %b,
-              status      : %s,
-              total price : %d$
-            """, this.id, user.getFirstName(), user.getLastName(), car.getName(), car.getMark().getName(),
+    return String.format("Here is your Receipt.\nunique id   : %d, \nfirst name  : %s, \n"
+        + "last name   : %s, \ncar name    : %s, \ncar model   : %s, \nfor days    : %d,"
+        + "\ndriver need : %b, \nstatus      : %s, \ntotal price : %d$" , this.id, user.getFirstName(), user.getLastName(), car.getName(), car.getMark().getName(),
         daysNumber, driverNeeded, status.name(), totalPrice );
   }
 }

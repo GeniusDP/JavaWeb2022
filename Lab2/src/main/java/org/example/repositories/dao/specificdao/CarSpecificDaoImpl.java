@@ -32,11 +32,9 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
     }
     Connection connection = connectionPool.getConnection();
 
-    String sql = """
-          select cars.id, mark_id, quality_class, cars.name, base_price from lab_java.cars
-          inner join lab_java.marks as m on m.id = lab_java.cars.mark_id
-          where m.name = ?;
-        """;
+    String sql = "select cars.id, mark_id, quality_class, cars.name, base_price "
+      + "from lab_java.cars inner join lab_java.marks as m "
+      + "on m.id = lab_java.cars.mark_id where m.name = ?;";
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
       statement.setString(1, markName);
@@ -55,9 +53,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
     }
     Connection connection = connectionPool.getConnection();
 
-    String sql = """
-        select * from lab_java.cars where quality_class = ?
-        """;
+    String sql = "select * from lab_java.cars where quality_class = ?";
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
       statement.setString(1, qualityClass.name());
@@ -73,9 +69,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
   public List<Car> findAllByPriceOrdered() {
     Connection connection = connectionPool.getConnection();
 
-    String sql = """
-        select * from lab_java.cars order by base_price;
-        """;
+    String sql = "select * from lab_java.cars order by base_price;";
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
       return extractList(statement);
@@ -90,9 +84,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
   public List<Car> findAllByNameOrdered() {
     Connection connection = connectionPool.getConnection();
 
-    String sql = """
-        select * from lab_java.cars order by name;
-        """;
+    String sql = "select * from lab_java.cars order by name;";
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
       return extractList(statement);

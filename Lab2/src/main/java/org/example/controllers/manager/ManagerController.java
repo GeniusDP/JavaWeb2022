@@ -16,11 +16,11 @@ public class ManagerController {
   public void start() {
     ManagerAction action = managerView.chooseAction();
     switch (action) {
-      case SHOW_ALL_RECEIPTS -> showAllReceipts();
-      case RETURN_CAR -> returnACar();
-      case ACCEPT_RECEIPT -> acceptReceipt();
-      case DECLINE_RECEIPT -> declineReceipt();
-      case RETURN_DAMAGED_CAR -> returnDamagedCar();
+      case SHOW_ALL_RECEIPTS: showAllReceipts(); break;
+      case RETURN_CAR: returnACar(); break;
+      case ACCEPT_RECEIPT: acceptReceipt(); break;
+      case DECLINE_RECEIPT: declineReceipt(); break;
+      case RETURN_DAMAGED_CAR: returnDamagedCar(); break;
     }
   }
 

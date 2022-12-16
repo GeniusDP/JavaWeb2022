@@ -25,7 +25,7 @@ public class ReceiptService {
   public boolean carIsAvailable(long carId) {
     List<Car> allUnavailableCars = receiptRepository.getAllUnavailableCars();
     Optional<Car> any = allUnavailableCars.stream().filter(car -> car.getId() == carId).findAny();
-    return any.isEmpty();
+    return !any.isPresent();
   }
 
   public List<Receipt> getAllReceipts() {

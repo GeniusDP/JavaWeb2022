@@ -26,10 +26,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
 
   @Override
   protected Car insertInternal(Car car, Connection connection) throws SQLException {
-    String sql = """
-          insert into lab_java.cars(mark_id, quality_class, name, base_price)
-          values(?, ?, ?, ?)
-        """;
+    String sql = "insert into lab_java.cars(mark_id, quality_class, name, base_price) values(?, ?, ?, ?)";
     PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
     Mark mark = car.getMark();
@@ -98,11 +95,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
 
   private void updateBasePrice(Connection connection, Long key, Integer basePrice)
       throws SQLException {
-    String sqlUpdMark = """
-          update lab_java.cars
-          set base_price = ?
-          where id = ?;
-        """;
+    String sqlUpdMark = "update lab_java.cars set base_price = ? where id = ?";
     PreparedStatement statement = connection.prepareStatement(sqlUpdMark);
     if (basePrice == null) {
       statement.setNull(1, Types.INTEGER);
@@ -117,11 +110,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
   }
 
   private void updateName(Connection connection, Long key, String name) throws SQLException {
-    String sqlUpdMark = """
-          update lab_java.cars
-          set name = ?
-          where id = ?;
-        """;
+    String sqlUpdMark = "update lab_java.cars set name = ? where id = ?;";
     PreparedStatement statement = connection.prepareStatement(sqlUpdMark);
     if (name == null) {
       statement.setNull(1, Types.VARCHAR);
@@ -137,11 +126,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
 
   private void updateQualityClass(Connection connection, Long key, QualityClass qualityClass)
       throws SQLException {
-    String sqlUpdMark = """
-          update lab_java.cars
-          set quality_class = ?
-          where id = ?;
-        """;
+    String sqlUpdMark = "update lab_java.cars set quality_class = ? where id = ?;";
     PreparedStatement statement = connection.prepareStatement(sqlUpdMark);
     if (qualityClass == null) {
       statement.setNull(1, Types.VARCHAR);
@@ -156,11 +141,7 @@ public class CrudCarDao extends AbstractCrudDao<Car, Long> {
   }
 
   private void updateMark(Connection connection, Long key, Mark mark) throws SQLException {
-    String sqlUpdMark = """
-          update lab_java.cars
-          set mark_id = ?
-          where id = ?;
-        """;
+    String sqlUpdMark = "update lab_java.cars set mark_id = ? where id = ?;";
     PreparedStatement statement = connection.prepareStatement(sqlUpdMark);
     if (mark == null || mark.getId() == null) {
       statement.setNull(1, Types.BIGINT);

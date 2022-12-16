@@ -10,12 +10,12 @@ public enum LoginRegisterAction {
         if(value == null){
             return null;
         }
-        return switch (value){
-            case "LOGIN" -> LOGIN;
-            case "REGISTER" -> REGISTER;
-            case "BACK_TO_CHOOSE" -> BACK_TO_CHOOSE;
-            default -> null;
-        };
+        switch (value){
+            case "LOGIN": return LOGIN;
+            case "REGISTER": return REGISTER;
+            case "BACK_TO_CHOOSE": return BACK_TO_CHOOSE;
+            default: return null;
+        }
     }
 
 }

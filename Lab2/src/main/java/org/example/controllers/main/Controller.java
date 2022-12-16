@@ -35,9 +35,9 @@ public class Controller {
       authorize();
       do {
         switch (SecurityContext.getContext().getSubject().getRole()) {
-          case CLIENT -> actAsClient();
-          case MANAGER -> actAsManager();
-          case ADMIN -> actAsAdmin();
+          case CLIENT: actAsClient(); break;
+          case MANAGER: actAsManager(); break;
+          case ADMIN: actAsAdmin(); break;
         }
       } while (mainView.askForRepeat());
       mainView.loggedOut();

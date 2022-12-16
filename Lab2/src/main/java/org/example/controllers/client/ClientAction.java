@@ -13,14 +13,14 @@ public enum ClientAction {
     if (value == null) {
       return null;
     }
-    return switch (value) {
-      case "SHOW_CARS_BY_MARK" -> SHOW_CARS_BY_MARK;
-      case "SHOW_CARS_BY_CLASS" -> SHOW_CARS_BY_CLASS;
-      case "SORT_CARS_BY_PRICE" -> SORT_CARS_BY_PRICE;
-      case "SORT_CARS_BY_NAME" -> SORT_CARS_BY_NAME;
-      case "SHOW_MY_RECEIPTS" -> SHOW_MY_RECEIPTS;
-      case "RENT_A_CAR" -> RENT_A_CAR;
-      default -> GO_OUT;
-    };
+    switch (value) {
+      case "SHOW_CARS_BY_MARK": return SHOW_CARS_BY_MARK;
+      case "SHOW_CARS_BY_CLASS": return SHOW_CARS_BY_CLASS;
+      case "SORT_CARS_BY_PRICE": return SORT_CARS_BY_PRICE;
+      case "SORT_CARS_BY_NAME": return SORT_CARS_BY_NAME;
+      case "SHOW_MY_RECEIPTS": return SHOW_MY_RECEIPTS;
+      case "RENT_A_CAR": return RENT_A_CAR;
+      default: return GO_OUT;
+    }
   }
 }

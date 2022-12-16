@@ -26,12 +26,12 @@ public class ClientController {
   public void start() {
     ClientAction action = clientView.chooseAction();
     switch (action) {
-      case SHOW_CARS_BY_MARK -> getCarsByMark();
-      case SHOW_CARS_BY_CLASS -> getCarsByClass();
-      case SORT_CARS_BY_PRICE -> sortCarsByPrice();
-      case SORT_CARS_BY_NAME -> sortCarsByName();
-      case SHOW_MY_RECEIPTS -> showMyReceipts();
-      case RENT_A_CAR -> rentACar();
+      case SHOW_CARS_BY_MARK: getCarsByMark(); break;
+      case SHOW_CARS_BY_CLASS: getCarsByClass(); break;
+      case SORT_CARS_BY_PRICE: sortCarsByPrice(); break;
+      case SORT_CARS_BY_NAME: sortCarsByName(); break;
+      case SHOW_MY_RECEIPTS: showMyReceipts(); break;
+      case RENT_A_CAR: rentACar(); break;
     }
   }
 

@@ -9,12 +9,12 @@ public enum QualityClass {
     if(value == null){
       return null;
     }
-    return switch (value){
-      case "BASIC" -> BASIC;
-      case "BUSINESS" -> BUSINESS;
-      case "PREMIUM" -> PREMIUM;
-      default -> null;
-    };
+    switch (value){
+      case "BASIC": return BASIC;
+      case "BUSINESS": return BUSINESS;
+      case "PREMIUM": return PREMIUM;
+      default: return null;
+    }
   }
 
 }

@@ -25,12 +25,12 @@ public class AdminController {
   public void start() {
     AdminAction action = adminView.chooseAction();
     switch (action) {
-      case BAN_USER -> banUser();
-      case UNBAN_USER -> unbanUser();
-      case REGISTER_MANAGER -> registerManager();
-      case SHOW_ALL_CARS -> showAllCars();
-      case CREATE_CAR -> createCar();
-      case REMOVE_CAR -> removeCar();
+      case BAN_USER: banUser(); break;
+      case UNBAN_USER: unbanUser(); break;
+      case REGISTER_MANAGER: registerManager(); break;
+      case SHOW_ALL_CARS: showAllCars(); break;
+      case CREATE_CAR: createCar(); break;
+      case REMOVE_CAR: removeCar(); break;
     }
   }
 

@@ -9,12 +9,12 @@ public enum Role {
     if(value == null){
       return null;
     }
-    return switch (value) {
-      case "CLIENT" -> CLIENT;
-      case "MANAGER" -> MANAGER;
-      case "ADMIN" -> ADMIN;
-      default -> null;
-    };
+    switch (value) {
+      case "CLIENT": return CLIENT;
+      case "MANAGER": return MANAGER;
+      case "ADMIN": return ADMIN;
+      default: return null;
+    }
   }
 
 }

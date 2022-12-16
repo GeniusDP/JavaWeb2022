@@ -6,9 +6,6 @@ public enum AdminAction {
   UNBAN_USER,
   CREATE_CAR,
   REMOVE_CAR,
-//  CREATE_MARK,
-//  REMOVE_MARK,
-//  SHOW_ALL_MARKS,
   SHOW_ALL_CARS,
   GO_OUT;
 
@@ -16,17 +13,14 @@ public enum AdminAction {
     if (value == null) {
       return null;
     }
-    return switch (value) {
-      case "REGISTER_MANAGER" -> REGISTER_MANAGER;
-      case "BAN_USER" -> BAN_USER;
-      case "UNBAN_USER" -> UNBAN_USER;
-      case "CREATE_CAR" -> CREATE_CAR;
-      case "REMOVE_CAR" -> REMOVE_CAR;
-//      case "CREATE_MARK" -> CREATE_MARK;
-//      case "REMOVE_MARK" -> REMOVE_MARK;
-//      case "SHOW_ALL_MARKS" -> SHOW_ALL_MARKS;
-      case "SHOW_ALL_CARS" -> SHOW_ALL_CARS;
-      default -> GO_OUT;
-    };
+    switch (value) {
+      case "REGISTER_MANAGER": return REGISTER_MANAGER;
+      case "BAN_USER":return  BAN_USER;
+      case "UNBAN_USER":return  UNBAN_USER;
+      case "CREATE_CAR": return CREATE_CAR;
+      case "REMOVE_CAR": return REMOVE_CAR;
+      case "SHOW_ALL_CARS":return  SHOW_ALL_CARS;
+      default: return GO_OUT;
+    }
   }
 }

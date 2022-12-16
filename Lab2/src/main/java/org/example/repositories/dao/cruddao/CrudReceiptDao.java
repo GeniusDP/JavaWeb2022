@@ -23,10 +23,7 @@ public class CrudReceiptDao extends AbstractCrudDao<Receipt, Long> {
 
   @Override
   protected Receipt insertInternal(Receipt receipt, Connection connection) throws SQLException {
-    String sql = """
-          insert into lab_java.receipts(user_id, car_id, driver_needed, days_number, total_price)
-          values(?, ?, ?, ?, ?)
-        """;
+    String sql = "insert into lab_java.receipts(user_id, car_id, driver_needed, days_number, total_price) values(?, ?, ?, ?, ?) ";
     PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
     statement.setLong(1, receipt.getUser().getId());

@@ -36,9 +36,7 @@ public class ReceiptSpecificDao {
   public List<Receipt> getReceiptsOfUserByUserId(Long userId) {
     Connection connection = connectionPool.getConnection();
 
-    String sql = """
-        select * from lab_java.receipts where user_id = ?;
-        """;
+    String sql = "select * from lab_java.receipts where user_id = ?;";
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
       statement.setLong(1, userId);
@@ -53,10 +51,7 @@ public class ReceiptSpecificDao {
   public List<Receipt> getReturnedAndDeclinedReceipts() {
     Connection connection = connectionPool.getConnection();
 
-    String sql = """
-        select * from lab_java.receipts where status
-          IN ('DECLINED', 'RETURNED', 'RETURNED_WITH_DAMAGE');
-        """;
+    String sql = "select * from lab_java.receipts where status IN ('DECLINED', 'RETURNED', 'RETURNED_WITH_DAMAGE');";
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
       return extractList(statement);
@@ -71,9 +66,7 @@ public class ReceiptSpecificDao {
   public List<Receipt> getRegisteredOrAcceptedReceipts() {
     Connection connection = connectionPool.getConnection();
 
-    String sql = """
-        select * from lab_java.receipts where status IN ('REGISTERED', 'ACCEPTED');
-        """;
+    String sql = "select * from lab_java.receipts where status IN ('REGISTERED', 'ACCEPTED');";
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
       return extractList(statement);
@@ -87,9 +80,7 @@ public class ReceiptSpecificDao {
   public boolean setStatus(long receiptId, ReceiptStatus status) {
     Connection connection = connectionPool.getConnection();
 
-    String sql = """
-        update lab_java.receipts set status = ? where id = ?;
-        """;
+    String sql = "update lab_java.receipts set status = ? where id = ?;";
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
       statement.setString(1, status.name());
@@ -106,13 +97,9 @@ public class ReceiptSpecificDao {
   public boolean declineReceipt(long receiptId, String message) {
     Connection connection = connectionPool.getConnection();
 
-    String setStatusSql = """
-        update lab_java.receipts set status = ? where id = ?;
-        """;
+    String setStatusSql = "update lab_java.receipts set status = ? where id = ?;";
 
-    String addMessage = """
-        update lab_java.receipts set decline_message = ? where id = ?;
-        """;
+    String addMessage = "update lab_java.receipts set decline_message = ? where id = ?;";
 
     try {
       connection.setAutoCommit(false);
@@ -146,13 +133,9 @@ public class ReceiptSpecificDao {
   public boolean returnDamagedCar(long receiptId, int resultPrice) {
     Connection connection = connectionPool.getConnection();
 
-    String setStatusSql = """
-        update lab_java.receipts set status = ? where id = ?;
-        """;
+    String setStatusSql = "update lab_java.receipts set status = ? where id = ?";
 
-    String addMessage = """
-        update lab_java.receipts set total_price = ? where id = ?;
-        """;
+    String addMessage = "update lab_java.receipts set total_price = ? where id = ?;";
 
     try {
       connection.setAutoCommit(false);
