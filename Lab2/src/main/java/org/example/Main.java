@@ -38,11 +38,7 @@ import org.example.views.main.MainView;
 public class Main {
 
   public static void main(String[] args) throws IOException {
-    Properties properties = new Properties();
-    properties.load(new FileReader("src/main/resources/application.properties"));
-
-    String url = properties.getProperty("database.url");
-    ConnectionPool connectionPool = new ConnectionPool(url, "org.postgresql.Driver");
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     CrudCarDao crudCarDao;
     CrudMarkDao crudMarkDao;

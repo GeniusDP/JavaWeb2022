@@ -31,7 +31,7 @@ class CrudCarDaoTest {
   @BeforeEach
   public void init(){
     String url = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=zaranik";
-    ConnectionPool connectionPool = new ConnectionPool(url, "org.postgresql.Driver");
+    ConnectionPool connectionPool = ConnectionPool.getInstance();
     crudCarDao = new CrudCarDao(connectionPool);
     crudMarkDao = new CrudMarkDao(connectionPool);
     userDao = new CrudUserDao(connectionPool);
