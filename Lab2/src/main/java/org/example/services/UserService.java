@@ -1,6 +1,7 @@
 package org.example.services;
 
 import lombok.RequiredArgsConstructor;
+import org.example.entities.user.User;
 import org.example.repositories.UserRepository;
 
 @RequiredArgsConstructor
@@ -8,6 +9,9 @@ public class UserService {
 
   private final UserRepository userRepository;
 
+  public User findByUsername(String username){
+    return userRepository.findByUsername(username);
+  }
 
   public boolean existsById(long id) {
     return userRepository.findById(id) != null;

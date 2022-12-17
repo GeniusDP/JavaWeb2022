@@ -1,30 +1,29 @@
 package org.example.webcontrollers.filters;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Base64;
-import java.util.stream.Collectors;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.example.entities.user.Role;
+import org.example.entities.user.User;
 import org.example.repositories.UserRepository;
 import org.example.repositories.dao.cruddao.CrudUserDao;
 import org.example.repositories.dao.specificdao.UserSpecificDaoImpl;
 import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.RegisterLoginService;
+import org.example.services.UserService;
 
-
-@WebFilter(filterName = "AuthFilter" , urlPatterns = {"/auth"})
 public class AuthFilter implements Filter {
 
   private RegisterLoginService registerLoginService;
+  private UserService userService;
 
   @Override
   public void init(FilterConfig filterConfig) {
@@ -32,6 +31,7 @@ public class AuthFilter implements Filter {
     UserSpecificDaoImpl userSpecificDao = new UserSpecificDaoImpl(ConnectionPool.getInstance());
     UserRepository userRepository = new UserRepository(userDao, userSpecificDao);
     registerLoginService = new RegisterLoginService(userRepository);
+    userService = new UserService(userRepository);
   }
 
   @Override
@@ -68,6 +68,9 @@ public class AuthFilter implements Filter {
       response.sendRedirect("/login");
       return;
     }
+    User user = userService.findByUsername(username);
+    Role userRole = user.getRole();
+    req.setAttribute("userRole", userRole);
     chain.doFilter(req, resp);
   }
 

@@ -12,5 +12,6 @@
 </head>
 <body>
   <h3>If you see, you are authenticated:)</h3>
+  <p>Your role: ${userRole}</p>
 </body>
 </html>
