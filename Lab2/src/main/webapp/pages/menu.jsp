@@ -11,6 +11,16 @@
   <title>Menu</title>
 </head>
 <body>
-  <h3>Menu</h3>
+  <h3>Main menu</h3>
+  <p>Your role: ${userRole}</p>
+
+  <div>
+    <a href="/menu/get-cars-by-mark-form">Show cars by mark</a> </br>
+    <a href="/menu/get-cars-by-class-form">Show cars by class</a> </br>
+    <a href="/menu/get-cars-by-price">Show cars sorted by price</a> </br>
+    <a href="/menu/get-client-receipts">Show my receipts</a> </br>
+    <a href="/menu/rent-car-form">Rent a car</a> </br>
+  </div>
+
 </body>
 </html>

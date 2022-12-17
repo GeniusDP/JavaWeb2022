@@ -71,6 +71,7 @@ public class AuthFilter implements Filter {
     User user = userService.findByUsername(username);
     Role userRole = user.getRole();
     req.setAttribute("userRole", userRole);
+    req.setAttribute("username", username);
     chain.doFilter(req, resp);
   }
 

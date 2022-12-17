@@ -63,7 +63,7 @@ public class LoginController extends HttpServlet {
     cookie.setHttpOnly(true);
     response.addCookie(cookie);
 
-    response.sendRedirect("/");
+    response.sendRedirect("/menu");
 
   }
 
