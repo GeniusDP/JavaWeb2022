@@ -31,7 +31,7 @@ public class RegistrationController extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    getServletContext().getRequestDispatcher("/pages/register.jsp").forward(request, response);
+    getServletContext().getRequestDispatcher("/pages/auth/register.jsp").forward(request, response);
   }
 
   @Override
@@ -45,9 +45,9 @@ public class RegistrationController extends HttpServlet {
     boolean valid = registrationValidator.validate(username, password, repeatPassword, firstName, lastName);
     if (valid) {
       registerLoginService.registerUser(username, password, firstName, lastName, Role.CLIENT);
-      getServletContext().getRequestDispatcher("/pages/register-success.jsp").forward(request, response);
+      getServletContext().getRequestDispatcher("/pages/auth/register-success.jsp").forward(request, response);
     }
-    getServletContext().getRequestDispatcher("/pages/register-failed-due-to-validation.jsp").forward(request, response);
+    getServletContext().getRequestDispatcher("/pages/auth/register-failed-due-to-validation.jsp").forward(request, response);
   }
 
 

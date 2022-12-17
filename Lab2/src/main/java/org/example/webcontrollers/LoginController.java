@@ -32,7 +32,7 @@ public class LoginController extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    getServletContext().getRequestDispatcher("/pages/login.jsp").forward(request, response);
+    getServletContext().getRequestDispatcher("/pages/auth/login.jsp").forward(request, response);
   }
 
   @Override
@@ -43,15 +43,17 @@ public class LoginController extends HttpServlet {
     boolean valid = loginValidator.validate(username, password);
     if (!valid) {
       getServletContext()
-        .getRequestDispatcher("/pages/login-failed-due-to-validation.jsp")
+        .getRequestDispatcher("/pages/auth/login-failed-due-to-validation.jsp")
         .forward(request, response);
+      return;
     }
 
     boolean login = registerLoginService.login(username, password);
     if (!login) {
       getServletContext()
-        .getRequestDispatcher("/pages/login-failed-wrong-input.jsp")
+        .getRequestDispatcher("/pages/auth/login-failed-wrong-input.jsp")
         .forward(request, response);
+      return;
     }
 
 
@@ -61,9 +63,7 @@ public class LoginController extends HttpServlet {
     cookie.setHttpOnly(true);
     response.addCookie(cookie);
 
-    getServletContext()
-      .getRequestDispatcher("/pages/menu.jsp")
-      .forward(request, response);
+    response.sendRedirect("/");
 
   }
 
