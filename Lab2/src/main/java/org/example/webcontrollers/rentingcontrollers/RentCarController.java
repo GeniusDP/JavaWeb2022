@@ -14,7 +14,6 @@ import org.example.entities.receipt_decorator.DaysRentAddition;
 import org.example.entities.receipt_decorator.DriverAddition;
 import org.example.entities.receipt_decorator.ReceiptEntity;
 import org.example.entities.user.User;
-import org.example.exceptions.DatabaseException;
 import org.example.repositories.CarRepository;
 import org.example.repositories.MarkRepository;
 import org.example.repositories.ReceiptRepository;
@@ -63,7 +62,7 @@ public class RentCarController extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    getServletContext().getRequestDispatcher("/pages/rent-car.jsp").forward(request, response);
+    getServletContext().getRequestDispatcher("/pages/car/rent-car.jsp").forward(request, response);
   }
 
   @Override
@@ -91,13 +90,14 @@ public class RentCarController extends HttpServlet {
         receiptService.registerReceipt(receipt);
         request.setAttribute("car", car);
         request.setAttribute("receipt", receipt);
-        getServletContext().getRequestDispatcher("/pages/rent-car-succeeded.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/pages/car/rent-car-succeeded.jsp").forward(request, response);
       } else {
         request.setAttribute("car", car);
-        getServletContext().getRequestDispatcher("/pages/car-is-unavailable.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/pages/car/car-is-unavailable.jsp").forward(request, response);
       }
     } else {
-      getServletContext().getRequestDispatcher("/pages/no-such-car.jsp").forward(request, response);
+      request.setAttribute("carId", carId);
+      getServletContext().getRequestDispatcher("/pages/car/no-such-car.jsp").forward(request, response);
     }
 
   }

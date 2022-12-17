@@ -22,11 +22,7 @@
     <h3>Receipt creating failed: no such car</h3>
     <table>
       <tr>
-        <th> ${car.id} </th>
-        <th> ${car.name} </th>
-        <th> ${car.mark.name} </th>
-        <th> ${car.qualityClass} </th>
-        <th> ${car.basePrice} </th>
+        <th> ${carId} </th>
       </tr>
     </table>
     <a href="/menu">Back to menu</a>

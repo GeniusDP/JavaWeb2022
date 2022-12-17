@@ -44,6 +44,6 @@ public class CarsByMarkNameController extends HttpServlet {
     }
     req.setAttribute("caption", "Cars by mark name " + (markName != null ? markName : ""));
     req.setAttribute("description", "List of cars of mark " + (markName != null ? markName : ""));
-    getServletContext().getRequestDispatcher("/pages/get-cars-by-mark-name.jsp").forward(req, resp);
+    getServletContext().getRequestDispatcher("/pages/car/get-cars-by-mark-name.jsp").forward(req, resp);
   }
 }

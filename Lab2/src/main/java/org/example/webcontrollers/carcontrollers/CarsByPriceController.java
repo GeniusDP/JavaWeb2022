@@ -41,7 +41,7 @@ public class CarsByPriceController extends HttpServlet {
     req.setAttribute("cars", cars);
     req.setAttribute("caption", "Cars by price");
     req.setAttribute("description", "List of cars, sorted by price");
-    getServletContext().getRequestDispatcher("/pages/get-cars-list.jsp").forward(req, resp);
+    getServletContext().getRequestDispatcher("/pages/car/get-cars-list.jsp").forward(req, resp);
   }
 
 }

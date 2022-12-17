@@ -46,6 +46,6 @@ public class CarsByClassController extends HttpServlet {
     }
     req.setAttribute("caption", "Cars by class name " + (className != null ? className : ""));
     req.setAttribute("description", "List of cars of class name " + (className != null ? className : ""));
-    getServletContext().getRequestDispatcher("/pages/get-cars-by-class-name.jsp").forward(req, resp);
+    getServletContext().getRequestDispatcher("/pages/car/get-cars-by-class-name.jsp").forward(req, resp);
   }
 }
