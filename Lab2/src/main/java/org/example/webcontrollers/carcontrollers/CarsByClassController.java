@@ -1,4 +1,4 @@
-package org.example.webcontrollers;
+package org.example.webcontrollers.carcontrollers;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.example.entities.car.Car;
+import org.example.entities.car.QualityClass;
 import org.example.repositories.CarRepository;
 import org.example.repositories.MarkRepository;
 import org.example.repositories.dao.cruddao.CrudCarDao;
@@ -18,8 +19,8 @@ import org.example.repositories.dao.specificdao.MarkSpecificDaoImpl;
 import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.CarsService;
 
-@WebServlet(name = "CarsByMarkName", urlPatterns = "/menu/get-cars-by-mark-name")
-public class CarsByMarkName extends HttpServlet {
+@WebServlet(name = "CarsByClassController", urlPatterns = "/menu/get-cars-by-class-name")
+public class CarsByClassController extends HttpServlet {
 
   private CarsService carsService;
 
@@ -37,13 +38,14 @@ public class CarsByMarkName extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String markName = req.getParameter("markName");
-    if (markName != null) {
-      List<Car> cars = carsService.getCarsByMark(markName);
+    String className = req.getParameter("className");
+    QualityClass qualityClass = QualityClass.getQualityClass(className);
+    if (qualityClass != null) {
+      List<Car> cars = carsService.getCarsByQualityClass(className);
       req.setAttribute("cars", cars);
     }
-    req.setAttribute("caption", "Cars by mark name " + (markName != null ? markName : ""));
-    req.setAttribute("description", "List of cars of mark " + (markName != null ? markName : ""));
-    getServletContext().getRequestDispatcher("/pages/get-cars-by-mark-name.jsp").forward(req, resp);
+    req.setAttribute("caption", "Cars by class name " + (className != null ? className : ""));
+    req.setAttribute("description", "List of cars of class name " + (className != null ? className : ""));
+    getServletContext().getRequestDispatcher("/pages/get-cars-by-class-name.jsp").forward(req, resp);
   }
 }

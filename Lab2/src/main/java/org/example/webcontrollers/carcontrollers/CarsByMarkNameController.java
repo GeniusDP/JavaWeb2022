@@ -1,4 +1,4 @@
-package org.example.webcontrollers;
+package org.example.webcontrollers.carcontrollers;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,8 +18,8 @@ import org.example.repositories.dao.specificdao.MarkSpecificDaoImpl;
 import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.CarsService;
 
-@WebServlet(name = "CarByPriceController", urlPatterns = "/menu/get-cars-by-price")
-public class CarByPriceController extends HttpServlet {
+@WebServlet(name = "CarsByMarkName", urlPatterns = "/menu/get-cars-by-mark-name")
+public class CarsByMarkNameController extends HttpServlet {
 
   private CarsService carsService;
 
@@ -37,11 +37,13 @@ public class CarByPriceController extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    List<Car> cars = carsService.getCarsSortedByPrice();
-    req.setAttribute("cars", cars);
-    req.setAttribute("caption", "Cars by price");
-    req.setAttribute("description", "List of cars, sorted by price");
-    getServletContext().getRequestDispatcher("/pages/get-cars-list.jsp").forward(req, resp);
+    String markName = req.getParameter("markName");
+    if (markName != null) {
+      List<Car> cars = carsService.getCarsByMark(markName);
+      req.setAttribute("cars", cars);
+    }
+    req.setAttribute("caption", "Cars by mark name " + (markName != null ? markName : ""));
+    req.setAttribute("description", "List of cars of mark " + (markName != null ? markName : ""));
+    getServletContext().getRequestDispatcher("/pages/get-cars-by-mark-name.jsp").forward(req, resp);
   }
-
 }
