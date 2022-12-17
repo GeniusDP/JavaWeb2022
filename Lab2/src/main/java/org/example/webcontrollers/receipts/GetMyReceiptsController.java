@@ -27,8 +27,8 @@ import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.ReceiptService;
 import org.example.services.UserService;
 
-@WebServlet(name = "ShowMyReceiptsController", urlPatterns = "/menu/my-receipts")
-public class ShowMyReceiptsController extends HttpServlet {
+@WebServlet(name = "GetMyReceiptsController", urlPatterns = "/menu/my-receipts")
+public class GetMyReceiptsController extends HttpServlet {
 
   private ReceiptService receiptService;
   private UserService userService;
@@ -60,7 +60,7 @@ public class ShowMyReceiptsController extends HttpServlet {
       User user = userService.findByUsername(username);
       List<Receipt> allMyReceipts = receiptService.getMyReceipts(user);
       request.setAttribute("receipts", allMyReceipts);
-      getServletContext().getRequestDispatcher("/pages/my-receipts.jsp").forward(request, response);
+      getServletContext().getRequestDispatcher("/pages/receipts/my-receipts.jsp").forward(request, response);
     } catch (DatabaseException e) {
       getServletContext().getRequestDispatcher("/pages/error.jsp").forward(request, response);
       System.out.println(e);

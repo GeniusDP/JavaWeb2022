@@ -6,6 +6,17 @@
   version="3.1">
 
   <filter>
+    <filter-name>UserInfoRequestAttributeFilter</filter-name>
+    <filter-class>org.example.webcontrollers.filters.UserInfoRequestAttributeFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>UserInfoRequestAttributeFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+
+  <filter>
     <filter-name>AuthFilter</filter-name>
     <filter-class>org.example.webcontrollers.filters.AuthFilter</filter-class>
   </filter>
@@ -14,6 +25,7 @@
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/menu/rent-car</url-pattern>
     <url-pattern>/menu/my-receipts</url-pattern>
+    <url-pattern>/menu/all-receipts</url-pattern>
   </filter-mapping>
 
 </web-app>
