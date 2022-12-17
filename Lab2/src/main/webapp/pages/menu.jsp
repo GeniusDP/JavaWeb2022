@@ -19,7 +19,7 @@
     <a href="/menu/get-cars-by-class-name">Show cars by class</a> </br>
     <a href="/menu/get-cars-by-price">Show cars sorted by price</a> </br>
     <a href="/menu/get-client-receipts">Show my receipts</a> </br>
-    <a href="/menu/rent-car-form">Rent a car</a> </br>
+    <a href="/menu/rent-car">Rent a car</a> </br>
   </div>
 
 </body>

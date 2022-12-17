@@ -13,7 +13,8 @@
   <filter-mapping>
     <filter-name>AuthFilter</filter-name>
     <url-pattern>/auth</url-pattern>
-    <url-pattern>/menu</url-pattern>
+    <url-pattern>/menu/rent-car</url-pattern>
+    <url-pattern>/menu/my-receipts</url-pattern>
   </filter-mapping>
 
 </web-app>

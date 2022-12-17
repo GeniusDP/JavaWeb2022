@@ -66,8 +66,7 @@ public class ClientController {
 
   }
 
-  protected AbstractReceiptEntity applyAdditions(AbstractReceiptEntity receiptEntity,
-      Receipt receipt) {
+  private AbstractReceiptEntity applyAdditions(AbstractReceiptEntity receiptEntity, Receipt receipt) {
 
     boolean needDriver = clientView.needDriver();
     receipt.setDriverNeeded(needDriver);
