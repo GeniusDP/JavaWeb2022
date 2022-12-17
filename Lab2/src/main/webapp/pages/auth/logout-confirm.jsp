@@ -15,6 +15,6 @@
 <form method="post" action="/logout">
   <button type="submit">Logout</button>
 </form>
-
+<a href="/">Back to main page</a>
 </body>
 </html>
