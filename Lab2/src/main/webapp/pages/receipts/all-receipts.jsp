@@ -65,11 +65,10 @@
               </form>
             </th>
             <th>
-              <form action="/menu/return-receipt" method="post">
+              <form action="/menu/return-car" method="get">
                 <input type="hidden" name="receiptId" value=${receipt.id}>
-                <button type="submit">RETURN</button>
+                <button type="submit">RETURN CAR</button>
               </form>
-            </th>
             </th>
           </tr>
         </c:forEach>

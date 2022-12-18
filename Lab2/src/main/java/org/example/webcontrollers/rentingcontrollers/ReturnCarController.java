@@ -1,19 +1,13 @@
 package org.example.webcontrollers.rentingcontrollers;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.example.entities.car.Car;
 import org.example.entities.receipt.Receipt;
-import org.example.entities.receipt_decorator.AbstractReceiptEntity;
-import org.example.entities.receipt_decorator.BasicReceipt;
-import org.example.entities.receipt_decorator.DaysRentAddition;
-import org.example.entities.receipt_decorator.DriverAddition;
-import org.example.entities.receipt_decorator.ReceiptEntity;
-import org.example.entities.user.User;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.CarRepository;
 import org.example.repositories.MarkRepository;
@@ -29,16 +23,13 @@ import org.example.repositories.dao.specificdao.MarkSpecificDaoImpl;
 import org.example.repositories.dao.specificdao.ReceiptSpecificDao;
 import org.example.repositories.dao.specificdao.UserSpecificDaoImpl;
 import org.example.repositories.dbutils.ConnectionPool;
-import org.example.services.CarsService;
 import org.example.services.ReceiptService;
-import org.example.services.UserService;
 
-@WebServlet(name = "RentCarController", urlPatterns = "/menu/rent-car")
-public class RentCarController extends HttpServlet {
+@WebServlet(name = "ReturnCarController", urlPatterns = "/menu/return-car")
+public class ReturnCarController extends HttpServlet {
 
-  private CarsService carsService;
   private ReceiptService receiptService;
-  private UserService userService;
+
 
   @Override
   public void init() {
@@ -49,7 +40,6 @@ public class RentCarController extends HttpServlet {
     CrudCarDao crudCarDao = new CrudCarDao(ConnectionPool.getInstance());
 
     CarRepository carRepository = new CarRepository(crudCarDao, markRepository, carSpecificDao);
-    carsService = new CarsService(carRepository);
 
     CrudUserDao userDao = new CrudUserDao(ConnectionPool.getInstance());
     UserSpecificDaoImpl userSpecificDao = new UserSpecificDaoImpl(ConnectionPool.getInstance());
@@ -58,65 +48,41 @@ public class RentCarController extends HttpServlet {
     ReceiptSpecificDao receiptSpecificDao = new ReceiptSpecificDao(ConnectionPool.getInstance(), userRepository, carRepository);
     ReceiptRepository receiptRepository = new ReceiptRepository(crudReceiptDao, receiptSpecificDao, carRepository, userRepository);
     receiptService = new ReceiptService(receiptRepository);
-    userService = new UserService(userRepository);
   }
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    getServletContext().getRequestDispatcher("/pages/car/rent-car.jsp").forward(request, response);
+    request.setAttribute("receiptId", request.getParameter("receiptId"));
+    System.out.println(request.getAttribute("receiptId"));
+    getServletContext().getRequestDispatcher("/pages/receipts/return-car.jsp").forward(request, response);
   }
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
-      int carId = Integer.parseInt(request.getParameter("carId"));
-      boolean driverNeeded = Boolean.parseBoolean(request.getParameter("driverNeeded"));
-      int daysRent = Integer.parseInt(request.getParameter("daysRent"));
-      System.out.println("carId = " + carId);
-      System.out.println("driverNeeded = " + driverNeeded);
-      System.out.println("daysRent = " + daysRent);
-      String username = (String) request.getAttribute("username");
-
-      if (carsService.existsById(carId)) {
-        Car car = carsService.getCarById(carId);
-        if (receiptService.carIsAvailable(carId)) {
-          User user = userService.findByUsername(username);
-          Receipt receipt = Receipt.builder().car(car).user(user).build();
-
-          AbstractReceiptEntity receiptEntity = new BasicReceipt(car, user);
-
-          receiptEntity = applyAdditions(receiptEntity, receipt, driverNeeded, daysRent);
-
-          ReceiptEntity resultReceiptEntity = new ReceiptEntity(receiptEntity);
-          receipt.setTotalPrice(resultReceiptEntity.getTotalPrice());
-          receiptService.registerReceipt(receipt);
-          request.setAttribute("car", car);
-          request.setAttribute("receipt", receipt);
-          getServletContext().getRequestDispatcher("/pages/car/rent-car-succeeded.jsp").forward(request, response);
-        } else {
-          request.setAttribute("car", car);
-          getServletContext().getRequestDispatcher("/pages/car/car-is-unavailable.jsp").forward(request, response);
+      int receiptId = Integer.parseInt(request.getParameter("receiptId"));
+      System.out.println(receiptId);
+      if (request.getParameter("fixingPrice") != null && request.getParameter("fixingPrice").matches("^\\d+$")) {
+        int fixingPrice = Integer.parseInt(request.getParameter("fixingPrice"));
+        System.out.println("fixingPrice = " + fixingPrice);
+        if (fixingPrice == 0) {
+          receiptService.returnCar(receiptId);
         }
+        receiptService.returnDamagedCar(receiptId, fixingPrice);
       } else {
-        request.setAttribute("carId", carId);
-        getServletContext().getRequestDispatcher("/pages/car/no-such-car.jsp").forward(request, response);
+        receiptService.returnCar(receiptId);
       }
+      List<Receipt> allMyReceipts = receiptService.getAllReceipts();
+      request.setAttribute("receipts", allMyReceipts);
+      getServletContext().getRequestDispatcher("/pages/receipts/all-receipts.jsp").forward(request, response);
     } catch (DatabaseException e) {
       getServletContext().getRequestDispatcher("/pages/error.jsp").forward(request, response);
       System.out.println(e);
     }
-
   }
 
-  private AbstractReceiptEntity applyAdditions(AbstractReceiptEntity receiptEntity, Receipt receipt, boolean needDriver, int daysRent) {
-    receipt.setDriverNeeded(needDriver);
-    if (needDriver) {
-      receiptEntity = new DriverAddition(receiptEntity);
-    }
-    receiptEntity = new DaysRentAddition(receiptEntity, daysRent);
-    receipt.setDaysNumber(daysRent);
-    return receiptEntity;
+  @Override
+  public void destroy() {
   }
-
 
 }

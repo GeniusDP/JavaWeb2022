@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.example.entities.user.Role;
+import org.example.exceptions.DatabaseException;
 import org.example.repositories.UserRepository;
 import org.example.repositories.dao.cruddao.CrudUserDao;
 import org.example.repositories.dao.specificdao.UserSpecificDaoImpl;
@@ -14,7 +15,7 @@ import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.RegisterLoginService;
 import org.example.webcontrollers.validators.RegistrationValidator;
 
-@WebServlet(name = "RegistrationController" , urlPatterns = "/register")
+@WebServlet(name = "RegistrationController", urlPatterns = "/register")
 public class RegistrationController extends HttpServlet {
 
   private RegistrationValidator registrationValidator;
@@ -36,18 +37,23 @@ public class RegistrationController extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-    String repeatPassword = request.getParameter("password-repeat");
-    String firstName = request.getParameter("firstName");
-    String lastName = request.getParameter("lastName");
+    try {
+      String username = request.getParameter("username");
+      String password = request.getParameter("password");
+      String repeatPassword = request.getParameter("password-repeat");
+      String firstName = request.getParameter("firstName");
+      String lastName = request.getParameter("lastName");
 
-    boolean valid = registrationValidator.validate(username, password, repeatPassword, firstName, lastName);
-    if (valid) {
-      registerLoginService.registerUser(username, password, firstName, lastName, Role.CLIENT);
-      getServletContext().getRequestDispatcher("/pages/auth/register-success.jsp").forward(request, response);
+      boolean valid = registrationValidator.validate(username, password, repeatPassword, firstName, lastName);
+      if (valid) {
+        registerLoginService.registerUser(username, password, firstName, lastName, Role.CLIENT);
+        getServletContext().getRequestDispatcher("/pages/auth/register-success.jsp").forward(request, response);
+      }
+      getServletContext().getRequestDispatcher("/pages/auth/register-failed-due-to-validation.jsp").forward(request, response);
+    } catch (DatabaseException e) {
+      getServletContext().getRequestDispatcher("/pages/error.jsp").forward(request, response);
+      System.out.println(e);
     }
-    getServletContext().getRequestDispatcher("/pages/auth/register-failed-due-to-validation.jsp").forward(request, response);
   }
 
 

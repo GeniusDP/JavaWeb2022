@@ -33,6 +33,7 @@ public class ReceiptService {
   }
 
   public boolean returnCar(long receiptId) {
+    System.out.println("returnCar");
     return receiptRepository.setStatus(receiptId, ReceiptStatus.RETURNED);
   }
 
@@ -49,6 +50,7 @@ public class ReceiptService {
   }
 
   public boolean returnDamagedCar(long receiptId, int fixPrice) {
+    System.out.println("returnDamagedCar");
     return receiptRepository.returnDamagedCar(receiptId, fixPrice);
   }
 }

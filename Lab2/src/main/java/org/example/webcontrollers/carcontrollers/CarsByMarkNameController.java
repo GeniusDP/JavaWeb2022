@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.example.entities.car.Car;
+import org.example.exceptions.DatabaseException;
 import org.example.repositories.CarRepository;
 import org.example.repositories.MarkRepository;
 import org.example.repositories.dao.cruddao.CrudCarDao;
@@ -37,13 +38,18 @@ public class CarsByMarkNameController extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    String markName = req.getParameter("markName");
-    if (markName != null) {
-      List<Car> cars = carsService.getCarsByMark(markName);
-      req.setAttribute("cars", cars);
+    try {
+      String markName = req.getParameter("markName");
+      if (markName != null) {
+        List<Car> cars = carsService.getCarsByMark(markName);
+        req.setAttribute("cars", cars);
+      }
+      req.setAttribute("caption", "Cars by mark name " + (markName != null ? markName : ""));
+      req.setAttribute("description", "List of cars of mark " + (markName != null ? markName : ""));
+      getServletContext().getRequestDispatcher("/pages/car/get-cars-by-mark-name.jsp").forward(req, resp);
+    } catch (DatabaseException e) {
+      getServletContext().getRequestDispatcher("/pages/error.jsp").forward(req, resp);
+      System.out.println(e);
     }
-    req.setAttribute("caption", "Cars by mark name " + (markName != null ? markName : ""));
-    req.setAttribute("description", "List of cars of mark " + (markName != null ? markName : ""));
-    getServletContext().getRequestDispatcher("/pages/car/get-cars-by-mark-name.jsp").forward(req, resp);
   }
 }

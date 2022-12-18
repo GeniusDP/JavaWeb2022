@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.example.entities.car.Car;
+import org.example.exceptions.DatabaseException;
 import org.example.repositories.CarRepository;
 import org.example.repositories.MarkRepository;
 import org.example.repositories.dao.cruddao.CrudCarDao;
@@ -37,11 +38,16 @@ public class CarsByPriceController extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    List<Car> cars = carsService.getCarsSortedByPrice();
-    req.setAttribute("cars", cars);
-    req.setAttribute("caption", "Cars by price");
-    req.setAttribute("description", "List of cars, sorted by price");
-    getServletContext().getRequestDispatcher("/pages/car/get-cars-list.jsp").forward(req, resp);
+    try {
+      List<Car> cars = carsService.getCarsSortedByPrice();
+      req.setAttribute("cars", cars);
+      req.setAttribute("caption", "Cars by price");
+      req.setAttribute("description", "List of cars, sorted by price");
+      getServletContext().getRequestDispatcher("/pages/car/get-cars-list.jsp").forward(req, resp);
+    } catch (DatabaseException e) {
+      getServletContext().getRequestDispatcher("/pages/error.jsp").forward(req, resp);
+      System.out.println(e);
+    }
   }
 
 }
