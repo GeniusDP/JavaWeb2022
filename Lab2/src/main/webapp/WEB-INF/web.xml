@@ -26,6 +26,10 @@
     <url-pattern>/menu/rent-car</url-pattern>
     <url-pattern>/menu/my-receipts</url-pattern>
     <url-pattern>/menu/all-receipts</url-pattern>
+    <url-pattern>/menu/register-manager</url-pattern>
+    <url-pattern>/menu/all-users</url-pattern>
+    <url-pattern>/menu/ban-user</url-pattern>
+    <url-pattern>/menu/unban-user</url-pattern>
   </filter-mapping>
 
 </web-app>

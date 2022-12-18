@@ -34,6 +34,8 @@
       </c:if>
 
       <c:if test="${userRole == 'ADMIN'}">
+        <a href="/menu/register-manager">Register new manager</a> </br>
+        <a href="/menu/all-users">Manage users</a> </br>
       </c:if>
 
       <a href="/">Main Page</a> </br>

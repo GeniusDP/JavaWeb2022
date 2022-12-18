@@ -1,25 +1,29 @@
-package org.example.webcontrollers;
+package org.example.webcontrollers.admin;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.example.entities.user.Role;
+import org.example.entities.user.User;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.UserRepository;
 import org.example.repositories.dao.cruddao.CrudUserDao;
 import org.example.repositories.dao.specificdao.UserSpecificDaoImpl;
 import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.RegisterLoginService;
+import org.example.services.UserService;
 import org.example.webcontrollers.validators.RegistrationValidator;
 
-@WebServlet(name = "RegistrationController", urlPatterns = "/register")
-public class RegistrationController extends HttpServlet {
+@WebServlet(name = "RegisterManagerController", urlPatterns = "/menu/register-manager")
+public class RegisterManagerController extends HttpServlet {
 
   private RegistrationValidator registrationValidator;
   private RegisterLoginService registerLoginService;
+  private UserService userService;
 
   @Override
   public void init() {
@@ -28,11 +32,14 @@ public class RegistrationController extends HttpServlet {
     UserSpecificDaoImpl userSpecificDao = new UserSpecificDaoImpl(ConnectionPool.getInstance());
     UserRepository userRepository = new UserRepository(userDao, userSpecificDao);
     registerLoginService = new RegisterLoginService(userRepository);
+    userService = new UserService(userRepository);
   }
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    getServletContext().getRequestDispatcher("/pages/auth/register.jsp").forward(request, response);
+    List<User> allUsers = userService.findAllUsers();
+    request.setAttribute("users", allUsers);
+    getServletContext().getRequestDispatcher("/pages/admin/all-users.jsp").forward(request, response);
   }
 
   @Override
@@ -46,7 +53,7 @@ public class RegistrationController extends HttpServlet {
 
       boolean valid = registrationValidator.validate(username, password, repeatPassword, firstName, lastName);
       if (valid) {
-        registerLoginService.registerUser(username, password, firstName, lastName, Role.CLIENT);
+        registerLoginService.registerUser(username, password, firstName, lastName, Role.MANAGER);
         getServletContext().getRequestDispatcher("/pages/auth/register-success.jsp").forward(request, response);
         return;
       }

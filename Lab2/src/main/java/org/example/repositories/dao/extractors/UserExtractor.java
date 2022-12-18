@@ -22,7 +22,7 @@ public class UserExtractor implements Extractor<User> {
                 .password(password)
                 .firstName(firstName)
                 .lastName(lastName)
-                .isBanned(isBanned)
+                .banned(isBanned)
                 .role(Role.getRole(role))
                 .build();
     }

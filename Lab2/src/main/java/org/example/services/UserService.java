@@ -1,5 +1,6 @@
 package org.example.services;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.user.User;
 import org.example.repositories.UserRepository;
@@ -23,5 +24,9 @@ public class UserService {
 
   public void unbanUser(long id) {
     userRepository.setIsBanned(id, false);
+  }
+
+  public List<User> findAllUsers() {
+    return userRepository.findAll();
   }
 }
