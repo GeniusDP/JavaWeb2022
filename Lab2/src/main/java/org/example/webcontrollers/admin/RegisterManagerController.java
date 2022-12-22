@@ -39,7 +39,7 @@ public class RegisterManagerController extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     List<User> allUsers = userService.findAllUsers();
     request.setAttribute("users", allUsers);
-    getServletContext().getRequestDispatcher("/pages/admin/all-users.jsp").forward(request, response);
+    getServletContext().getRequestDispatcher("/pages/admin/register-manager.jsp").forward(request, response);
   }
 
   @Override

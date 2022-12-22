@@ -39,10 +39,12 @@ public class UserInfoRequestAttributeFilter implements Filter {
     Cookie[] cookies = request.getCookies();
 
     Cookie basicAuth = null;
-    for (Cookie cookie : cookies) {
-      if(cookie.getName().equals("basicAuth")){
-        basicAuth = cookie;
-        break;
+    if(cookies != null) {
+      for (Cookie cookie : cookies) {
+        if (cookie.getName().equals("basicAuth")) {
+          basicAuth = cookie;
+          break;
+        }
       }
     }
 
