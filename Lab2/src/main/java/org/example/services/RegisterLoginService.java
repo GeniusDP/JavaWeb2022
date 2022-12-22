@@ -1,13 +1,11 @@
 package org.example.services;
 
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.example.entities.user.Role;
 import org.example.entities.user.User;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.UserRepository;
-import org.example.security.SecurityContext;
-
-import java.util.Objects;
 
 @RequiredArgsConstructor
 public class RegisterLoginService {
@@ -16,23 +14,22 @@ public class RegisterLoginService {
 
   public boolean login(String username, String password) {
     User user = userRepository.findByUsername(username);
-    boolean loginResult = !(user == null) && (!user.isBanned()) && Objects.equals(user.getPassword(), password);
-    if (loginResult) {
-      SecurityContext.getContext().setCurrentUser(user);
-    }
-    return loginResult;
+    return !(user == null) && (!user.isBanned()) && Objects.equals(user.getPassword(), password);
   }
 
   public User registerUser(String username, String password, String firstName, String lastName, Role role) {
     try {
-     User user = User.builder()
-              .username(username)
-              .password(password)
-              .firstName(firstName)
-              .lastName(lastName)
-              .role(role)
-              .build();
-      return userRepository.insert(user);
+      if (!userRepository.existsByUsername(username)) {
+        User user = User.builder()
+          .username(username)
+          .password(password)
+          .firstName(firstName)
+          .lastName(lastName)
+          .role(role)
+          .build();
+        return userRepository.insert(user);
+      }
+      return null;
     } catch (DatabaseException exception) {
       return null;
     }

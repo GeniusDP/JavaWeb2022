@@ -17,7 +17,7 @@ public abstract class AbstractCrudDao<T, K> implements CrudDao<T, K> {
   @Override
   public T insert(T value) {
     if (value == null) {
-      throw new IllegalArgumentException("mark must not be null");
+      throw new IllegalArgumentException("value must not be null");
     }
     Connection connection = connectionPool.getConnection();
 
@@ -53,7 +53,7 @@ public abstract class AbstractCrudDao<T, K> implements CrudDao<T, K> {
   @Override
   public T update(K key, T newValue) {
     if (newValue == null || key == null) {
-      throw new IllegalArgumentException("car must not be null");
+      throw new IllegalArgumentException("value and key must not be null");
     }
     Connection connection = connectionPool.getConnection();
 
