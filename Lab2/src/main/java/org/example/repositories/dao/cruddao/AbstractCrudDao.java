@@ -3,9 +3,11 @@ package org.example.repositories.dao.cruddao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import lombok.extern.log4j.Log4j;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.dbutils.ConnectionPool;
 
+@Log4j
 public abstract class AbstractCrudDao<T, K> implements CrudDao<T, K> {
 
   private final ConnectionPool connectionPool;
@@ -25,6 +27,7 @@ public abstract class AbstractCrudDao<T, K> implements CrudDao<T, K> {
     try {
       newValue = insertInternal(value, connection);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     }
 
@@ -43,6 +46,7 @@ public abstract class AbstractCrudDao<T, K> implements CrudDao<T, K> {
     try {
       count = deleteInternal(key, connection);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     }
 
@@ -61,6 +65,7 @@ public abstract class AbstractCrudDao<T, K> implements CrudDao<T, K> {
     try {
       t = updateInternal(key, newValue, connection);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     }
 
@@ -76,6 +81,7 @@ public abstract class AbstractCrudDao<T, K> implements CrudDao<T, K> {
     try {
       all = findAllInternal(connection);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     }
 
@@ -94,6 +100,7 @@ public abstract class AbstractCrudDao<T, K> implements CrudDao<T, K> {
     try {
       byIdInternal = findByIdInternal(key, connection);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     }
 

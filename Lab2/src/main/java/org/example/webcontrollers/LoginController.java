@@ -8,6 +8,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.UserRepository;
 import org.example.repositories.dao.cruddao.CrudUserDao;
@@ -16,6 +18,7 @@ import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.RegisterLoginService;
 import org.example.webcontrollers.validators.LoginValidator;
 
+@Log4j
 @WebServlet(name = "LoginController", urlPatterns = "/login")
 public class LoginController extends HttpServlet {
 
@@ -24,6 +27,7 @@ public class LoginController extends HttpServlet {
 
   @Override
   public void init() {
+    log.info("LoginController init method invoked");
     loginValidator = new LoginValidator();
     CrudUserDao userDao = new CrudUserDao(ConnectionPool.getInstance());
     UserSpecificDaoImpl userSpecificDao = new UserSpecificDaoImpl(ConnectionPool.getInstance());
@@ -66,8 +70,8 @@ public class LoginController extends HttpServlet {
 
       response.sendRedirect("/menu");
     } catch (DatabaseException e) {
+      log.error(e.getMessage());
       getServletContext().getRequestDispatcher("/pages/error.jsp").forward(request, response);
-      System.out.println(e);
     }
   }
 

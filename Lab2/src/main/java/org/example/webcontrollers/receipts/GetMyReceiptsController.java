@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j;
 import org.example.entities.receipt.Receipt;
 import org.example.entities.user.User;
 import org.example.exceptions.DatabaseException;
@@ -27,6 +28,7 @@ import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.ReceiptService;
 import org.example.services.UserService;
 
+@Log4j
 @WebServlet(name = "GetMyReceiptsController", urlPatterns = "/menu/my-receipts")
 public class GetMyReceiptsController extends HttpServlet {
 
@@ -62,8 +64,8 @@ public class GetMyReceiptsController extends HttpServlet {
       request.setAttribute("receipts", allMyReceipts);
       getServletContext().getRequestDispatcher("/pages/receipts/my-receipts.jsp").forward(request, response);
     } catch (DatabaseException e) {
+      log.error(e);
       getServletContext().getRequestDispatcher("/pages/error.jsp").forward(request, response);
-      System.out.println(e);
     }
   }
 

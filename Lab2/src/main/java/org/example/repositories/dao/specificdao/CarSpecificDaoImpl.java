@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.extern.log4j.Log4j;
 import org.example.entities.car.Car;
 import org.example.entities.car.Mark;
 import org.example.entities.car.QualityClass;
@@ -13,6 +14,7 @@ import org.example.repositories.dao.extractors.CarExtractor;
 import org.example.repositories.dao.extractors.Extractor;
 import org.example.repositories.dbutils.ConnectionPool;
 
+@Log4j
 public class CarSpecificDaoImpl implements CarSpecificDao {
 
   private ConnectionPool connectionPool;
@@ -40,6 +42,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
       statement.setString(1, markName);
       return extractList(statement);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
@@ -59,6 +62,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
       statement.setString(1, qualityClass.name());
       return extractList(statement);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
@@ -74,6 +78,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
       PreparedStatement statement = connection.prepareStatement(sql);
       return extractList(statement);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
@@ -89,6 +94,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
       PreparedStatement statement = connection.prepareStatement(sql);
       return extractList(statement);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
@@ -109,6 +115,7 @@ public class CarSpecificDaoImpl implements CarSpecificDao {
       }
       return null;
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);

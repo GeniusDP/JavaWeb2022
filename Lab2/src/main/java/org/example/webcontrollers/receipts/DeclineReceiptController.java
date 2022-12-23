@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.CarRepository;
 import org.example.repositories.MarkRepository;
@@ -23,6 +24,7 @@ import org.example.repositories.dao.specificdao.UserSpecificDaoImpl;
 import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.ReceiptService;
 
+@Log4j
 @WebServlet(name = "DeclineReceiptController", urlPatterns = "/menu/decline-receipt")
 public class DeclineReceiptController extends HttpServlet {
 
@@ -58,8 +60,8 @@ public class DeclineReceiptController extends HttpServlet {
       }
       getServletContext().getRequestDispatcher("/pages/receipts/failed-to-decline-car.jsp").forward(request, response);
     } catch (DatabaseException e) {
+      log.error(e);
       getServletContext().getRequestDispatcher("/pages/error.jsp").forward(request, response);
-      System.out.println(e);
     }
 
   }

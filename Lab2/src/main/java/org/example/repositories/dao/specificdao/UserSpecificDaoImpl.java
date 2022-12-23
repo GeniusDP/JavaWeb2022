@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import lombok.extern.log4j.Log4j;
 import org.example.entities.user.User;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.dao.extractors.Extractor;
 import org.example.repositories.dao.extractors.UserExtractor;
 import org.example.repositories.dbutils.ConnectionPool;
 
+@Log4j
 public class UserSpecificDaoImpl implements UserSpecificDao {
 
   private final ConnectionPool connectionPool;
@@ -37,6 +39,7 @@ public class UserSpecificDaoImpl implements UserSpecificDao {
         return userExtractor.extract(resultSet);
       }
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
@@ -60,6 +63,7 @@ public class UserSpecificDaoImpl implements UserSpecificDao {
       statement.executeUpdate();
       statement.close();
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);

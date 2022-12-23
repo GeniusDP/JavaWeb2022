@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import lombok.extern.log4j.Log4j;
 import org.example.entities.car.Mark;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.dao.extractors.Extractor;
 import org.example.repositories.dao.extractors.MarkExtractor;
 import org.example.repositories.dbutils.ConnectionPool;
 
+@Log4j
 public class MarkSpecificDaoImpl implements MarkSpecificDao{
 
   private final ConnectionPool connectionPool;
@@ -39,6 +41,7 @@ public class MarkSpecificDaoImpl implements MarkSpecificDao{
         result = markExtractor.extract(resultSet);
       }
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);

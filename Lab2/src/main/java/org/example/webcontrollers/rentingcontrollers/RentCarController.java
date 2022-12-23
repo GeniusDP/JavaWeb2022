@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j;
 import org.example.entities.car.Car;
 import org.example.entities.receipt.Receipt;
 import org.example.entities.receipt_decorator.AbstractReceiptEntity;
@@ -33,6 +34,7 @@ import org.example.services.CarsService;
 import org.example.services.ReceiptService;
 import org.example.services.UserService;
 
+@Log4j
 @WebServlet(name = "RentCarController", urlPatterns = "/menu/rent-car")
 public class RentCarController extends HttpServlet {
 
@@ -102,8 +104,8 @@ public class RentCarController extends HttpServlet {
         getServletContext().getRequestDispatcher("/pages/car/no-such-car.jsp").forward(request, response);
       }
     } catch (DatabaseException e) {
+      log.error(e);
       getServletContext().getRequestDispatcher("/pages/error.jsp").forward(request, response);
-      System.out.println(e);
     }
 
   }

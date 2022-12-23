@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j;
 import org.example.entities.user.Role;
 import org.example.entities.user.User;
 import org.example.exceptions.DatabaseException;
@@ -18,6 +19,7 @@ import org.example.services.RegisterLoginService;
 import org.example.services.UserService;
 import org.example.webcontrollers.validators.RegistrationValidator;
 
+@Log4j
 @WebServlet(name = "RegisterManagerController", urlPatterns = "/menu/register-manager")
 public class RegisterManagerController extends HttpServlet {
 
@@ -59,8 +61,8 @@ public class RegisterManagerController extends HttpServlet {
       }
       getServletContext().getRequestDispatcher("/pages/auth/register-failed-due-to-validation.jsp").forward(request, response);
     } catch (DatabaseException e) {
+      log.error(e);
       getServletContext().getRequestDispatcher("/pages/error.jsp").forward(request, response);
-      System.out.println(e);
     }
   }
 

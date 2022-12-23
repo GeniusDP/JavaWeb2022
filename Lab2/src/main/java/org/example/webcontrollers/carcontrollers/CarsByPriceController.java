@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j;
 import org.example.entities.car.Car;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.CarRepository;
@@ -19,6 +20,7 @@ import org.example.repositories.dao.specificdao.MarkSpecificDaoImpl;
 import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.CarsService;
 
+@Log4j
 @WebServlet(name = "CarByPriceController", urlPatterns = "/menu/get-cars-by-price")
 public class CarsByPriceController extends HttpServlet {
 
@@ -45,8 +47,8 @@ public class CarsByPriceController extends HttpServlet {
       req.setAttribute("description", "List of cars, sorted by price");
       getServletContext().getRequestDispatcher("/pages/car/get-cars-list.jsp").forward(req, resp);
     } catch (DatabaseException e) {
+      log.error(e);
       getServletContext().getRequestDispatcher("/pages/error.jsp").forward(req, resp);
-      System.out.println(e);
     }
   }
 

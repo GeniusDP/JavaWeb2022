@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.extern.log4j.Log4j;
 import org.example.entities.car.Car;
 import org.example.entities.receipt.Receipt;
 import org.example.entities.receipt.ReceiptStatus;
@@ -18,6 +19,7 @@ import org.example.repositories.dao.extractors.Extractor;
 import org.example.repositories.dao.extractors.ReceiptExtractor;
 import org.example.repositories.dbutils.ConnectionPool;
 
+@Log4j
 public class ReceiptSpecificDao {
 
   private final ConnectionPool connectionPool;
@@ -42,6 +44,7 @@ public class ReceiptSpecificDao {
       statement.setLong(1, userId);
       return extractList(statement);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
@@ -56,6 +59,7 @@ public class ReceiptSpecificDao {
       PreparedStatement statement = connection.prepareStatement(sql);
       return extractList(statement);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
@@ -71,6 +75,7 @@ public class ReceiptSpecificDao {
       PreparedStatement statement = connection.prepareStatement(sql);
       return extractList(statement);
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
@@ -87,6 +92,7 @@ public class ReceiptSpecificDao {
       statement.setLong(2, receiptId);
       return statement.executeUpdate() == 1;
     } catch (SQLException e) {
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
@@ -122,8 +128,10 @@ public class ReceiptSpecificDao {
       try {
         connection.rollback();
       } catch (SQLException ex) {
+        log.error(e);
         throw new DatabaseException(e);
       }
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);
@@ -158,8 +166,10 @@ public class ReceiptSpecificDao {
       try {
         connection.rollback();
       } catch (SQLException ex) {
+        log.error(e);
         throw new DatabaseException(e);
       }
+      log.error(e);
       throw new DatabaseException(e);
     } finally {
       connectionPool.putBack(connection);

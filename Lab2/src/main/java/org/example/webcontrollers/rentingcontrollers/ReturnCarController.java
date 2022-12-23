@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j;
 import org.example.entities.receipt.Receipt;
 import org.example.exceptions.DatabaseException;
 import org.example.repositories.CarRepository;
@@ -25,6 +26,7 @@ import org.example.repositories.dao.specificdao.UserSpecificDaoImpl;
 import org.example.repositories.dbutils.ConnectionPool;
 import org.example.services.ReceiptService;
 
+@Log4j
 @WebServlet(name = "ReturnCarController", urlPatterns = "/menu/return-car")
 public class ReturnCarController extends HttpServlet {
 
@@ -53,7 +55,6 @@ public class ReturnCarController extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     request.setAttribute("receiptId", request.getParameter("receiptId"));
-    System.out.println(request.getAttribute("receiptId"));
     getServletContext().getRequestDispatcher("/pages/receipts/return-car.jsp").forward(request, response);
   }
 
@@ -61,10 +62,8 @@ public class ReturnCarController extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     try {
       int receiptId = Integer.parseInt(request.getParameter("receiptId"));
-      System.out.println(receiptId);
       if (request.getParameter("fixingPrice") != null && request.getParameter("fixingPrice").matches("^\\d+$")) {
         int fixingPrice = Integer.parseInt(request.getParameter("fixingPrice"));
-        System.out.println("fixingPrice = " + fixingPrice);
         if (fixingPrice == 0) {
           receiptService.returnCar(receiptId);
         }
@@ -76,8 +75,8 @@ public class ReturnCarController extends HttpServlet {
       request.setAttribute("receipts", allMyReceipts);
       getServletContext().getRequestDispatcher("/pages/receipts/all-receipts.jsp").forward(request, response);
     } catch (DatabaseException e) {
+      log.error(e);
       getServletContext().getRequestDispatcher("/pages/error.jsp").forward(request, response);
-      System.out.println(e);
     }
   }
 
