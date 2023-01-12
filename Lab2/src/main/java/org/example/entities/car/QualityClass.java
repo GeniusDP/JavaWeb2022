@@ -9,7 +9,7 @@ public enum QualityClass {
     if(value == null){
       return null;
     }
-    switch (value){
+    switch (value.toUpperCase()){
       case "BASIC": return BASIC;
       case "BUSINESS": return BUSINESS;
       case "PREMIUM": return PREMIUM;

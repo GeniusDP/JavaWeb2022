@@ -10,3 +10,5 @@
 [INFO] 2022-12-23 org.example.services.RegisterLoginService  - registration of user started
 [INFO] 2022-12-23 org.example.services.RegisterLoginService  - registration of user finished
 [INFO] 2022-12-23 org.example.webcontrollers.RegistrationController  - registration failed: such user admin already exists
+[INFO] 2022-12-30 org.example.webcontrollers.LoginController  - LoginController init method invoked
+[INFO] 2022-12-30 org.example.webcontrollers.LoginController  - LoginController init method invoked
